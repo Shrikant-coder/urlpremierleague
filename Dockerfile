@@ -1,34 +1,27 @@
 # Stage 1: Build stage
-FROM openjdk:18-jdk-slim as build
+FROM openjdk:21-slim as build
 
 # Install Maven
-RUN apt-get update && \
-    apt-get install -y maven && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y maven
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Maven configuration file (pom.xml) to cache dependencies
-COPY pom.xml .
-
-# Download dependencies only if pom.xml is changed
-RUN mvn dependency:go-offline
-
-# Copy the source code to the working directory
+# Copy the Maven configuration file and the source code to the container
+COPY pom.xml ./
 COPY src ./src
 
 # Build the application
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime stage
-FROM openjdk:18-jdk-slim as runtime
+FROM openjdk:21-jdk-slim
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Copy the packaged WAR file from the build stage and rename it to upl.war
-COPY --from=build /app/target/your-application-name.war upl.war
+COPY --from=build /app/target/*.war upl.war
 
 # Expose the port your application runs on (assuming port 8080)
 EXPOSE 8080
