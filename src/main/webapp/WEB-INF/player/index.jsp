@@ -16,12 +16,10 @@
         }
 
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
             max-width: 1000px;
             margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box; /* Ensure padding is included in max-width */
         }
 
         .banner {
@@ -30,7 +28,7 @@
         }
 
         .banner img {
-            width: 200px;
+            max-width: 100%;
             height: auto;
         }
 
@@ -54,24 +52,12 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Same font as body */
         }
 
-        .filter-section button {
-            padding: 8px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Same font as body */
-        }
-
         .details-container {
-            width: 100%;
-            padding: 20px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             margin: 20px auto;
-            max-width: 600px;
+            padding: 20px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Same font as body */
         }
 
@@ -109,42 +95,23 @@
             background-color: #e9ecef;
         }
 
-        .sidebar {
-            width: 100%;
-            text-align: left;
-            padding: 20px;
-            background-color: #343a40;
-            border-radius: 10px;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Same font as body */
-            margin-bottom: 20px;
-        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
 
-        .sidebar h3 {
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            border-bottom: 2px solid #fff;
-            padding-bottom: 10px;
-        }
+            .details-container {
+                padding: 10px;
+            }
 
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
+            .banner img {
+                width: 150px;
+            }
 
-        .sidebar li {
-            margin-bottom: 15px;
-        }
-
-        .sidebar li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1rem;
-        }
-
-        .sidebar li a:hover {
-            text-decoration: underline;
+            table {
+                font-size: 0.8rem;
+            }
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -214,10 +181,8 @@
 </head>
 <body>
     <div class="banner">
-        
         <header style="background-color: #4CAF50; color: white; text-align: center; padding: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            <h1 style="margin: 0; font-size: 2.5em;">
-                URUL PREMIER LEAGUE </h1>
+            <h1 style="margin: 0; font-size: 2.5em;">URUL PREMIER LEAGUE</h1>
             <p style="margin: 10px 0 0; font-size: 1.2em;">Welcome Player</p>
         </header>
     </div>
@@ -226,7 +191,8 @@
         <div class="filter-section">
             <label for="role-filter"><a href="#" onclick="fetchOwnerDetails()">Owner Details</a></label>
             <label for="role-filter"><a href="#" onclick="fetchSponsorDetails()">Sponsor Details</a></label>
-        </br></br><label for="role-filter"><a>Player Role:</a></label>
+            <br><br>
+            <label for="role-filter">Player Role:</label>
             <select id="role-filter">
                 <option value="All">All</option>
                 <option value="Bowler">Bowler</option>
@@ -238,7 +204,6 @@
         <div class="details-container" id="details-container">
             <!-- Details will be fetched and displayed here -->
         </div>
-
     </div>
 </body>
 </html>
