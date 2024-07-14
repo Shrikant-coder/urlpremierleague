@@ -38,8 +38,9 @@ public class AdminController {
     
     @GetMapping("/addShrikant")
 	public String addShrikant() {
-		Users user=new Users(0, "shreeja", "shreeja", "admin");
+		Users user=new Users(0, "shree", "shree", "admin");
 		userRepository.save(user);
+		
 		return "shreeja";
 	}
     @PostMapping("/addPlayer")

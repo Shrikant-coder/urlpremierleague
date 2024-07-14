@@ -59,7 +59,7 @@ public class LoginController {
 				return "redirect:/player/index";
 			default:
 				// Handle other roles or unexpected cases
-				return "redirect:/login";
+				return "redirect:/";
 			}
 		} else {
 			// Invalid credentials, redirect back to login page with error message
