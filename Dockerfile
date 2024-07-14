@@ -1,7 +1,6 @@
 # Stage 1: Build stage
-FROM adoptopenjdk/openjdk17:alpine as build
+FROM openjdk:17-alpine as build
 
-# Set working directory inside the container
 WORKDIR /app
 
 # Copy the Maven configuration files (pom.xml) to cache dependencies
@@ -17,9 +16,8 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime stage
-FROM adoptopenjdk/openjdk17:alpine-jre as runtime
+FROM openjdk:17-alpine-jre as runtime
 
-# Set working directory inside the container
 WORKDIR /app
 
 # Copy the packaged WAR file from the build stage
