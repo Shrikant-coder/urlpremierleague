@@ -48,13 +48,14 @@ public class LoginController {
 
 		if (user != null) {
 			// Redirect based on user role
-			switch (user.getRole()) {
-			case "admin":
+			String role=user.getRole().toUpperCase();
+			switch (role) {
+			case "ADMIN":
 				admin=true;
 				return "redirect:/admin/index";
-			case "owner":
-				return "redirect:/owner/index";
-			case "player":
+			case "OWNER":
+				return "redirect:/player/index";
+			case "PLAYER":
 				return "redirect:/player/index";
 			default:
 				// Handle other roles or unexpected cases

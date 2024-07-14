@@ -99,7 +99,7 @@
                 data.forEach(function(owner) {
                     var captainName = owner.captain ? owner.captain.name : "None";
                     var imageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
-                    $("#owners-container").append("<div class='data-list'><p>Name: " + owner.name + ", Captain: " + captainName + "<img src='" + imageSrc + "' height='100'></p><button onclick='deleteOwner(" + owner.id + ")'>Delete</button></div>");
+                    $("#owners-container").append("<div class='data-list'><p> " + owner.name + ",  " + captainName + "<img src='" + imageSrc + "' height='100'><button onclick='deleteOwner(" + owner.id + ")'>Delete</button></p></div>");
                 });
             });
         }
@@ -112,7 +112,7 @@
         data.forEach(function(owner) {
           var captainName = owner.captain ? owner.captain.name : "None";
           var imageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
-          $("#owners-container").append("<div class='data-list'><p>Name: " + owner.name + ", Captain: " + captainName + "<img src='" + imageSrc + "' height='100'></p><button onclick='deleteOwner(" + owner.id + ")'>Delete</button></div>");
+          $("#owners-container").append("<div class='data-list'><p> " + owner.name + ",  " + captainName + "<img src='" + imageSrc + "' height='100'><button onclick='deleteOwner(" + owner.id + ")'>Delete</button></p></div>");
           $("#owner-select").append(new Option(owner.name, owner.id));
         });
       });
@@ -125,7 +125,7 @@
         $("#player-select").empty();
         data.forEach(function(player) {
           var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
-          $("#players-container").append("<div class='data-list'><p>Name: " + player.name + ", Role: " + player.role + ", Village: " + player.village + "<img src='" + imageSrc + "' height='100'></p><button onclick='deletePlayer(" + player.id + ")'>Delete</button></div>");
+          $("#players-container").append("<div class='data-list'><p> " + player.name + ",  " + player.role + ",  " + player.village + "<img src='" + imageSrc + "' height='100'><button onclick='deletePlayer(" + player.id + ")'>Delete</button></p></div>");
           $("#player-select").append(new Option(player.name, player.id));
         });
       });
@@ -399,9 +399,9 @@
             <div class="form-group">
                 <label for="user-role">Role:</label>
                 <select id="user-role" name="user-role">
-                    <option value="Admin">Admin</option>
-                    <option value="Player">Player</option>
-                    <option value="Owner">Owner</option>
+                    <option value="admin">Admin</option>
+                    <option value="player">Player</option>
+                    <option value="owner">Owner</option>
                 </select>
             </div>
 
