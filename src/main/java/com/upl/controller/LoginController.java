@@ -1,6 +1,5 @@
 package com.upl.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,25 +7,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.upl.model.Owner;
-import com.upl.model.Player;
 import com.upl.model.Users;
-import com.upl.repository.OwnerRepository;
-import com.upl.repository.PlayerRepository;
 import com.upl.repository.UserRepository;
 
 @Controller
 public class LoginController {
 
-	@Autowired
-	private OwnerRepository ownerService;
 	
 	public static boolean admin=false;
 
-	@Autowired
-	private PlayerRepository playerService;
 	@Autowired
 	private UserRepository userRepository; // Assuming you have a UserService to handle user-related operations
 
