@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM adoptopenjdk/openjdk21:alpine as build
+FROM adoptopenjdk/openjdk17:alpine as build
 
 # Set working directory inside the container
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime stage
-FROM adoptopenjdk/openjdk21:alpine-jre as runtime
+FROM adoptopenjdk/openjdk17:alpine-jre as runtime
 
 # Set working directory inside the container
 WORKDIR /app
