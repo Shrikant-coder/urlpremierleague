@@ -1,0 +1,79 @@
+package com.upl.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.upl.model.Owner;
+import com.upl.model.Player;
+import com.upl.model.Users;
+import com.upl.repository.OwnerRepository;
+import com.upl.repository.PlayerRepository;
+import com.upl.repository.UserRepository;
+
+@Controller
+public class LoginController {
+
+	@Autowired
+	private OwnerRepository ownerService;
+	
+	public static boolean admin=false;
+
+	@Autowired
+	private PlayerRepository playerService;
+	@Autowired
+	private UserRepository userRepository; // Assuming you have a UserService to handle user-related operations
+
+	@GetMapping("/")
+	public String loginForm() {
+		return "login"; // Renders login.jsp
+	}
+
+	@GetMapping("owner/index")
+	public String loginForm2(Model model) {
+		return "/owner/index"; // Renders login.jsp
+	}
+
+	@GetMapping("admin/index")
+	public String loginForm4(Model model) {
+		 model.addAttribute("admin", admin);
+		return "/admin/index"; // Renders login.jsp
+	}
+
+	@GetMapping("player/index")
+	public String loginForm3() {
+		return "/player/index"; // Renders login.jsp
+	}
+
+	@PostMapping("/login")
+	public String login(@RequestParam String username, @RequestParam String password, Model model) {
+		// Validate credentials
+		Users user = userRepository.findByUsernameAndPassword(username, password);
+
+		if (user != null) {
+			// Redirect based on user role
+			switch (user.getRole()) {
+			case "admin":
+				admin=true;
+				return "redirect:/admin/index";
+			case "owner":
+				return "redirect:/owner/index";
+			case "player":
+				return "redirect:/player/index";
+			default:
+				// Handle other roles or unexpected cases
+				return "redirect:/login";
+			}
+		} else {
+			// Invalid credentials, redirect back to login page with error message
+			model.addAttribute("error", "Invalid username or password");
+			return "login";
+		}
+	}
+}
