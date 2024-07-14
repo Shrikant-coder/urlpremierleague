@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM openjdk:17-alpine as build
+FROM maven:3.8.3-openjdk-11-slim as build
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime stage
-FROM openjdk:17-alpine-jre as runtime
+FROM openjdk:11-slim as runtime
 
 WORKDIR /app
 
