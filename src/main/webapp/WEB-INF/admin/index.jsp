@@ -104,32 +104,17 @@
             });
         }
 
-        function fetchOwners() {
-      $.get("/admin/owners", function(data) {
-        $("#owners-container").empty();
-        $("#owners-container").append("<h3>All Owners</h3>");
-        $("#owner-select").empty();
-        data.forEach(function(owner) {
-          var captainName = owner.captain ? owner.captain.name : "None";
-          var imageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
-          $("#owners-container").append("<div class='data-list'><p> " + owner.name + ",  " + captainName + "<img src='" + imageSrc + "' height='100'><button onclick='deleteOwner(" + owner.id + ")'>Delete</button></p></div>");
-          $("#owner-select").append(new Option(owner.name, owner.id));
-        });
-      });
-    }
+        function fetchSponsors() {
+            $.get("/admin/sponsors", function(data) {
+                $("#sponsors-container").empty();
+                $("#sponsors-container").append("<h3>All Sponsors</h3>");
+                data.forEach(function(sponsor) {
+                    var imageSrc = sponsor.image ? "data:image/png;base64," + sponsor.image : "";
+                    $("#sponsors-container").append("<div class='data-list'><p>Name: " + sponsor.name + ", Post: " + sponsor.post + ", Amount: " + sponsor.amount + "<img src='" + imageSrc + "' height='100'><button onclick='deleteSponsor(" + sponsor.id + ")'>Delete</button></p></div>");
+                });
+            });
+        }
 
-    function fetchPlayers() {
-      $.get("/admin/players", function(data) {
-        $("#players-container").empty();
-        $("#players-container").append("<h3>All Players</h3>");
-        $("#player-select").empty();
-        data.forEach(function(player) {
-          var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
-          $("#players-container").append("<div class='data-list'><p> " + player.name + ",  " + player.role + ",  " + player.village + "<img src='" + imageSrc + "' height='100'><button onclick='deletePlayer(" + player.id + ")'>Delete</button></p></div>");
-          $("#player-select").append(new Option(player.name, player.id));
-        });
-      });
-    }
         function addPlayer() {
             var formData = new FormData();
             formData.append("name", $("#player-name").val());
@@ -282,36 +267,25 @@
                 });
             }
         }
-        window.onload = function() {
-            var admin = "${admin}"; // Get the ownerId value from JSP model attribute
-            // Check if ownerId is false, then submit the form
-            if (admin === "false") {
-                document.getElementById("redirectForm").submit(); // Submitting the form
-            }
-    }
-    function setPlayerAsOwner() {
-      var ownerId = $("#owner-select").val();
-      var playerId = $("#player-select").val();
 
-      $.ajax({
-        url: '/admin/setCaptain',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({ ownerId: ownerId, playerId: playerId }),
-        success: function(response) {
-          alert('Player set as Owner successfully!');
-          fetchOwners();
-        },
-        error: function(error) {
-          console.error('Error setting player as owner:', error);
+        function setPlayerAsOwner() {
+            var ownerId = $("#owner-select").val();
+            var playerId = $("#player-select").val();
+
+            $.ajax({
+                url: '/admin/setCaptain',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ ownerId: ownerId, playerId: playerId }),
+                success: function(response) {
+                    alert('Player set as Owner successfully!');
+                    fetchOwners();
+                },
+                error: function(error) {
+                    console.error('Error setting player as owner:', error);
+                }
+            });
         }
-      });
-    }
-
-    $(document).ready(function() {
-      fetchOwners();
-      fetchPlayers();
-    });
     </script>
 </head>
 <body>
@@ -404,7 +378,6 @@
                     <option value="owner">Owner</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <button onclick="addUser()">Add User</button>
             </div>
@@ -421,9 +394,6 @@
             </div>
             <button onclick="setPlayerAsOwner()">Set Player as Owner</button>
           </div>
-       
-       
-       
         <div id="users-container" class="section"></div>
     </div>
 </body>

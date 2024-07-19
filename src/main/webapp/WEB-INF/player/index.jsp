@@ -19,7 +19,7 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
-            box-sizing: border-box; /* Ensure padding is included in max-width */
+            box-sizing: border-box;
         }
 
         .banner {
@@ -32,24 +32,83 @@
             height: auto;
         }
 
-        .filter-section {
-            margin-bottom: 20px;
+        .nav-bar {
+            background-color: #4CAF50;
+            overflow: hidden;
+        }
+
+        .nav-bar a {
+            float: left;
+            display: block;
+            color: white;
             text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 17px;
         }
 
-        .filter-section label {
-            font-weight: bold;
-            margin-right: 10px;
+        .nav-bar a:hover {
+            background-color: #3e8e41;
         }
 
-        .filter-section select {
-            padding: 8px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            color: #555;
-            width: 150px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Same font as body */
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+
+        .dropdown .dropbtn {
+            font-size: 17px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 20px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown .dropdown-content .sub-dropdown {
+            position: relative;
+        }
+
+        .dropdown .dropdown-content .sub-dropdown .sub-dropdown-content {
+            left: 100%;
+            top: 0;
+            position: absolute;
+            display: none;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .dropdown .dropdown-content .sub-dropdown:hover .sub-dropdown-content {
+            display: block;
         }
 
         .details-container {
@@ -58,7 +117,7 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             margin: 20px auto;
             padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Same font as body */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .details-container h3 {
@@ -95,7 +154,6 @@
             background-color: #e9ecef;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -113,18 +171,46 @@
                 font-size: 0.8rem;
             }
         }
+
+        /* Marquee effect using CSS animations */
+        .marquee {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            background-color: #e9ecef;
+            padding: 10px 0;
+            color: #333;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            color: red; /* Set text color to red */
+            animation: marquee 25s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Function to fetch and display player details
         function fetchPlayerDetails() {
-            var selectedRole = $("#role-filter").val(); // Get selected role from dropdown
+            var selectedRole = $("#role-filter").val();
             $.get("/player/players", function(data) {
                 $("#details-container").empty();
                 $("#details-container").append("<h3>Player Details (" + selectedRole + ")</h3>");
                 var tableHtml = "<table><thead><tr><th>Name</th><th>Role</th><th>Village</th><th>Photo</th></tr></thead><tbody>";
                 data.forEach(function(player) {
-                    if (player.role === selectedRole || selectedRole === "All") { // Filter by selected role or show all
+                    if (player.role === selectedRole || selectedRole === "All") {
                         var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
                         tableHtml += "<tr><td>" + player.name + "</td><td>" + player.role + "</td><td>" + player.village + "</td><td><img src='" + imageSrc + "' height='100' width='100'></td></tr>";
                     }
@@ -134,7 +220,6 @@
             });
         }
 
-        // Function to fetch and display owner details
         function fetchOwnerDetails() {
             $.get("/owner/owners", function(data) {
                 $("#details-container").empty();
@@ -152,7 +237,6 @@
             });
         }
 
-        // Function to fetch and display sponsor details
         function fetchSponsorDetails() {
             $.get("/sponsors", function(data) {
                 $("#details-container").empty();
@@ -170,11 +254,10 @@
         }
 
         $(document).ready(function() {
-            fetchOwnerDetails(); // Call fetchOwnerDetails on document ready or as needed.
+            fetchOwnerDetails();
             
-            // Event listener for dropdown change
             $("#role-filter").change(function() {
-                fetchPlayerDetails(); // Call fetchPlayerDetails when dropdown selection changes
+                fetchPlayerDetails();
             });
         });
     </script>
@@ -183,24 +266,31 @@
     <div class="banner">
         <header style="background-color: #4CAF50; color: white; text-align: center; padding: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
             <h1 style="margin: 0; font-size: 2.5em;">URUL PREMIER LEAGUE</h1>
-            <p style="margin: 10px 0 0; font-size: 1.2em;">Welcome Player</p>
+            <p style="margin: 10px 0 0; font-size: 1.2em;">Welcome to URUL PREMIER LEAGUE</p>
         </header>
     </div>
 
-    <div class="container">
-        <div class="filter-section">
-            <label for="role-filter"><a href="#" onclick="fetchOwnerDetails()">Owner Details</a></label>
-            <label for="role-filter"><a href="#" onclick="fetchSponsorDetails()">Sponsor Details</a></label>
-            <br><br>
-            <label for="role-filter">Player Role:</label>
-            <select id="role-filter">
-                <option value="All">All</option>
-                <option value="Bowler">Bowler</option>
-                <option value="Batsman">Batsman</option>
-                <option value="All Rounder">All Rounder</option>
-            </select>
+    <div class="nav-bar">
+        <div class="dropdown">
+            <button class="dropbtn">Menu</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="fetchOwnerDetails()">Owner Details</a>
+                <a href="#" onclick="fetchSponsorDetails()">Sponsor Details</a>
+                <div class="sub-dropdown">
+                    <a href="#">Player Role</a>
+                    <div class="sub-dropdown-content">
+                        <a href="#" onclick="$('#role-filter').val('All'); fetchPlayerDetails();">All</a>
+                        <a href="#" onclick="$('#role-filter').val('Bowler'); fetchPlayerDetails();">Bowler</a>
+                        <a href="#" onclick="$('#role-filter').val('Batsman'); fetchPlayerDetails();">Batsman</a>
+                        <a href="#" onclick="$('#role-filter').val('All Rounder'); fetchPlayerDetails();">All Rounder</a>
+                    </div>
+                </div> 
+            </div>
         </div>
-        
+    </div>
+
+    <div class="container">
+        <div class="marquee"><span>Important Updates: खेळाडूंचा लिलाव १३ ऑक्टोबर २०२४ ला श्री जगदंबा हायस्कूल, उरुळ येथे ठीक १०:०० वाजता सुरू होईल. तरी सर्व टीम मालक आणि कॅप्टन यांनी उपस्थित राहावे ही विनंती. तसेच, लिलावाचे लाईव्ह चित्रिकरण आपणाला इथे पाहता येईल.</span></div>
         <div class="details-container" id="details-container">
             <!-- Details will be fetched and displayed here -->
         </div>
