@@ -223,22 +223,50 @@
             });
         }
 
+        // Function to fetch and display owner details
+        function fetchOwnerDetails() {
+            $.get("/owner/owners", function(data) {
+                $("#details-container").empty();
+                $("#details-container").append("<h3>Owner Details</h3>");
+                var tableHtml = "<table><thead><tr><th>Name</th><th>Captain</th><th>Owner Photo</th><th>Captain Photo</th></tr></thead><tbody>";
+                data.forEach(function(owner) {
+                    var ownerimageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
+                    var captainimageSrc = owner.captain.image ? "data:image/png;base64," + owner.captain.image : "";
+                    tableHtml += "<tr><td>" + owner.name + "</td><td>" + owner.captain.name + "</td><td><img src='" + ownerimageSrc + "' height='100' width='100'></td><td><img src='" + captainimageSrc + "' height='100' width='100'></tr>";
+                });
+                tableHtml += "</tbody></table>";
+                $("#details-container").append(tableHtml);
+            }).fail(function() {
+                alert("Error fetching owner details.");
+            });
+        }
+
+        // Function to fetch and display sponsor details
+        function fetchSponsorDetails() {
+            $.get("/sponsors", function(data) {
+                $("#details-container").empty();
+                $("#details-container").append("<h3>Sponsor Details</h3>");
+                var tableHtml = "<table><thead><tr><th>Name</th><th>Sneh</th><th>Amount</th><th>Photo</th></tr></thead><tbody>";
+                data.forEach(function(sponsor) {
+                    var imageSrc = sponsor.image ? "data:image/png;base64," + sponsor.image : "";
+                    tableHtml += "<tr><td>" + sponsor.name + "</td><td>" + sponsor.post + "</td><td>" + sponsor.amount + "</td><td><img src='" + imageSrc + "' height='100' width='100'></td></tr>";
+                });
+                tableHtml += "</tbody></table>";
+                $("#details-container").append(tableHtml);
+            }).fail(function() {
+                alert("Error fetching sponsor details.");
+            });
+        }
+
         $(document).ready(function() {
+            // Load sponsor details by default
+            fetchSponsorDetails();
+
             // Function to show dropdown menu and fetch player details
-            $(".player-details").click(function(event) {
-                event.preventDefault();
-                $("#player-dropdown").toggle(); // Toggle player dropdown visibility
+            $(".sub-dropdown-content a").click(function() {
+                var role = $(this).text();
+                fetchPlayerDetails(role);
             });
-
-            // Event listener for role selection
-            $("#player-dropdown a").click(function(event) {
-                event.preventDefault();
-                var selectedRole = $(this).text(); // Get the text of the clicked link
-                fetchPlayerDetails(selectedRole); // Fetch player details based on selected role
-            });
-
-            // Load player details by default when page loads
-            fetchPlayerDetails("All");
         });
     </script>
 </head>
@@ -249,7 +277,6 @@
             <p style="margin: 10px 0 0; font-size: 1.2em;">Welcome to URUL PREMIER LEAGUE</p>
         </header>
     </div>
-
     <div class="nav-bar">
         <div class="dropdown">
             <button class="dropbtn">Menu</button>
@@ -257,26 +284,24 @@
                 <a href="#" onclick="fetchOwnerDetails()">Owner Details</a>
                 <a href="#" onclick="fetchSponsorDetails()">Sponsor Details</a>
                 <div class="sub-dropdown">
-                    <a href="#" class="player-details">Player Details</a>
-                    <div id="player-dropdown" class="sub-dropdown-content">
+                    <a href="#">Player Details</a>
+                    <div class="sub-dropdown-content">
                         <a href="#">All</a>
                         <a href="#">Bowler</a>
                         <a href="#">Batsman</a>
                         <a href="#">All Rounder</a>
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
-
     <div class="container">
+        <div class="marquee">
+            <span>Important Updates: खेळाडूंचा लिलाव १३ ऑक्टोबर २०२४ ला श्री जगदंबा हायस्कूल उरुल येथे ठीक १०:०० वाजता सुरू होईल. तरी सर्व टीम मालक आणि कॅप्टन यांनी उपस्थित राहावे ही विनंती. तसेच, लिलावाचे लाईव्ह चित्रिकरण आपणाला इथे पाहता येईल.</span>
+        </div>
         <div class="details-container" id="details-container">
             <!-- Details will be fetched and displayed here -->
         </div>
-    </div>
-
-    <div class="container">
-        <div class="marquee"><span>Important Updates: खेळाडूंचा लिलाव १३ ऑक्टोबर २०२४ ला श्री जगदंबा हायस्कूल उरुल येथे ठीक १०:०० वाजता सुरू होईल. तरी सर्व टीम मालक आणि कॅप्टन यांनी उपस्थित राहावे ही विनंती. तसेच, लिलावाचे लाईव्ह चित्रिकरण आपणाला इथे पाहता येईल.</span></div>
     </div>
 </body>
 </html>
