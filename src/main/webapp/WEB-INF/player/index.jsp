@@ -188,7 +188,7 @@
         .marquee span {
             display: inline-block;
             padding-left: 100%;
-            color: red; /* Set text color to red */
+            color: red;
             animation: marquee 25s linear infinite;
         }
 
@@ -203,6 +203,10 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        function hideMenu() {
+            $(".nav-bar").hide();
+        }
+
         function fetchPlayerDetails() {
             var selectedRole = $("#role-filter").val();
             $.get("/player/players", function(data) {
@@ -217,6 +221,7 @@
                 });
                 tableHtml += "</tbody></table>";
                 $("#details-container").append(tableHtml);
+                hideMenu();
             });
         }
 
@@ -232,13 +237,14 @@
                 });
                 tableHtml += "</tbody></table>";
                 $("#details-container").append(tableHtml);
+                hideMenu();
             }).fail(function() {
                 alert("Error fetching owner details.");
             });
         }
 
         function fetchSponsorDetails() {
-            $.get("/sponsors", function(data) {
+            $.get("/sponsor/sponsors", function(data) {
                 $("#details-container").empty();
                 $("#details-container").append("<h3>Sponsor Details</h3>");
                 var tableHtml = "<table><thead><tr><th>Name</th><th>Sneh</th><th>Amount</th><th>Photo</th></tr></thead><tbody>";
@@ -248,6 +254,7 @@
                 });
                 tableHtml += "</tbody></table>";
                 $("#details-container").append(tableHtml);
+                hideMenu();
             }).fail(function() {
                 alert("Error fetching sponsor details.");
             });
@@ -290,7 +297,7 @@
     </div>
 
     <div class="container">
-        <div class="marquee"><span>Important Updates: खेळाडूंचा लिलाव १३ ऑक्टोबर २०२४ ला श्री जगदंबा हायस्कूल, उरुळ येथे ठीक १०:०० वाजता सुरू होईल. तरी सर्व टीम मालक आणि कॅप्टन यांनी उपस्थित राहावे ही विनंती. तसेच, लिलावाचे लाईव्ह चित्रिकरण आपणाला इथे पाहता येईल.</span></div>
+        <div class="marquee"><span>Important Updates: खेळाडूंचा लिलाव १३ ऑक्टोबर २०२४ ला श्री जगदंबा हायस्कूल उरुल येथे ठीक १०:०० वाजता सुरू होईल. तरी सर्व टीम मालक आणि कॅप्टन यांनी उपस्थित राहावे ही विनंती.तसेच, लिलावाचे लाईव्ह चित्रिकरण आपणाला इथे पाहता येईल.</span></div>
         <div class="details-container" id="details-container">
             <!-- Details will be fetched and displayed here -->
         </div>
