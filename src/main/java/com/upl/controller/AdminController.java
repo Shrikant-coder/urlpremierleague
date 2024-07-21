@@ -14,35 +14,24 @@ import org.springframework.web.multipart.MultipartFile;
 import com.upl.model.Owner;
 import com.upl.model.Player;
 import com.upl.model.Sponsor;
-import com.upl.model.Users;
 import com.upl.repository.OwnerRepository;
 import com.upl.repository.PlayerRepository;
-import com.upl.repository.SponserRepository;
-import com.upl.repository.UserRepository;
+import com.upl.repository.SponsorRepository;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    private PlayerRepository playerRepository;
+	 private final OwnerRepository ownerRepository;
+	    private final PlayerRepository playerRepository;
+	    private final SponsorRepository sponsorRepository;
 
-    @Autowired
-    private OwnerRepository ownerRepository;
-
-    @Autowired
-    private SponserRepository sponsorRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+	    public AdminController(OwnerRepository ownerRepository, PlayerRepository playerRepository, SponsorRepository sponsorRepository) {
+	        this.ownerRepository = ownerRepository;
+	        this.playerRepository = playerRepository;
+	        this.sponsorRepository = sponsorRepository;
+	    }
     
-    @GetMapping("/addShrikant")
-	public String addShrikant() {
-		Users user=new Users(0, "shree", "shree", "admin");
-		userRepository.save(user);
-		
-		return "shreeja";
-	}
     @PostMapping("/addPlayer")
     public ResponseEntity<String> addPlayer(@RequestParam("name") String name,
                                             @RequestParam("role") String role,
@@ -86,18 +75,7 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/addUser")
-    public ResponseEntity<String> addUser(@RequestParam("username") String username,
-                                          @RequestParam("password") String password,
-                                          @RequestParam("role") String role) {
-        try {
-            Users user = new Users(0, username, password, role);
-            userRepository.save(user);
-            return ResponseEntity.ok("User added successfully!");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding user");
-        }
-    }
+
 
     @DeleteMapping("/deletePlayer/{id}")
     public ResponseEntity<String> deletePlayer(@PathVariable int id) {
@@ -117,12 +95,6 @@ public class AdminController {
         return ResponseEntity.ok("Sponsor deleted successfully!");
     }
 
-    @DeleteMapping("/deleteUser/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable int id) {
-        userRepository.deleteById((long) id);
-        return ResponseEntity.ok("User deleted successfully!");
-    }
-
     @GetMapping("/players")
     public List<Player> getPlayers() {
         return playerRepository.findAll();
@@ -138,18 +110,13 @@ public class AdminController {
         return sponsorRepository.findAll();
     }
 
-    @GetMapping("/users")
-    public List<Users> getUsers() {
-        return userRepository.findAll();
-    }
-
     @PostMapping("/setCaptain")
     public ResponseEntity<?> setPlayerAsOwner(@RequestBody Map<String, Long> request) {
         Long ownerId = request.get("ownerId");
         Long playerId = request.get("playerId");
 
-        Optional<Owner> ownerOpt = ownerRepository.findById(ownerId);
-        Optional<Player> playerOpt = playerRepository.findById(playerId);
+        Optional<Owner> ownerOpt = ownerRepository.findAll().stream().filter(o->o.getId()==ownerId).findAny();
+        Optional<Player> playerOpt = playerRepository.findAll().stream().filter(p->p.getId()==playerId).findAny();
 
         if (ownerOpt.isPresent() && playerOpt.isPresent()) {
             Owner owner = ownerOpt.get();

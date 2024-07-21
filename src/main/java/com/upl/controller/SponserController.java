@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.upl.model.Sponsor;
-import com.upl.repository.SponserRepository;
+import com.upl.repository.SponsorRepository;
 
 @RestController("/sponsors")
 public class SponserController {
 
 	@Autowired
-	private SponserRepository sponsorService;
+	private SponsorRepository sponsorService;
 
 	@GetMapping("/sponsors")
 	public ResponseEntity<List<Sponsor>> getAllSponsor() {
