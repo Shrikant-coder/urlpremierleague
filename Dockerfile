@@ -22,6 +22,7 @@ WORKDIR /app
 # Copy the existing data files into the container
 COPY data /app/data
 
+
 # Set file permissions (if needed)
 RUN chmod 644 /app/data/*.txt
 
