@@ -19,6 +19,11 @@ FROM openjdk:21-jdk-slim
 
 # Set the working directory inside the container
 WORKDIR /app
+# Copy the existing data files into the container
+COPY data /app/data
+
+# Set file permissions (if needed)
+RUN chmod 644 /app/data/*.txt
 
 # Copy the packaged WAR file from the build stage and rename it to upl.war
 COPY --from=build /app/target/*.war upl.war
