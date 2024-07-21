@@ -122,7 +122,7 @@ public class AdminController {
             Owner owner = ownerOpt.get();
             Player player = playerOpt.get();
             owner.setCaptain(player);
-            ownerRepository.save(owner);
+            ownerRepository.SetCaptainForOwner(owner);	
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner or Player not found");

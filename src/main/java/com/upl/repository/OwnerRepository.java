@@ -38,4 +38,11 @@ public class OwnerRepository {
         owners.removeIf(owner -> owner.getId() == id);
         saveAll(owners);
     }
+
+	public void SetCaptainForOwner(Owner owner) {
+		 List<Owner> owners = findAll();
+		 owners.removeIf(o -> o.getId() == owner.getId());
+		 owners.add(owner);
+		 saveAll(owners);
+	}
 }

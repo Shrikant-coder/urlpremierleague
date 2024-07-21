@@ -6,70 +6,82 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
             margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
+            padding: 0;
+            background-color: #f4f4f4;
         }
         .container {
-            width: 100%;
-            max-width: 1200px;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .header, .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
         }
         .section {
-            margin-bottom: 20px;
+            background: #fff;
+            margin: 20px 0;
             padding: 20px;
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .section h3 {
+        h3 {
             margin-top: 0;
         }
         .form-group {
-            margin-bottom: 10px;
+            margin: 10px 0;
         }
         .form-group label {
             display: block;
-            font-weight: bold;
             margin-bottom: 5px;
         }
         .form-group input[type="text"],
-        .form-group input[type="password"],
-        .form-group select,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
         .form-group input[type="file"] {
-            width: calc(100% - 10px);
-            padding: 8px;
-            font-size: 14px;
+            padding: 5px;
         }
         .form-group button {
-            padding: 8px 16px;
-            background-color: #4CAF50;
-            color: white;
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
             border: none;
             cursor: pointer;
+            border-radius: 3px;
         }
         .form-group button:hover {
-            background-color: #45a049;
+            background: #555;
         }
         .data-list {
-            margin-top: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            background: #e9e9e9;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .data-list p {
-            margin: 5px 0;
+        .data-list img {
+            max-height: 100px;
+            margin-left: 10px;
+            border-radius: 5px;
         }
         .data-list button {
-            margin-left: 10px;
-            padding: 4px 8px;
-            background-color: #f44336;
-            color: white;
+            background: #ff4d4d;
+            color: #fff;
             border: none;
+            padding: 5px 10px;
             cursor: pointer;
+            border-radius: 3px;
         }
         .data-list button:hover {
-            background-color: #da190b;
+            background: #ff1a1a;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -78,41 +90,67 @@
             fetchPlayers();
             fetchOwners();
             fetchSponsors();
-            fetchUsers();
+            populateOwnerAndPlayerDropdowns();
         });
 
         function fetchPlayers() {
-            $.get("/admin/players", function(data) {
-                $("#players-container").empty();
-                $("#players-container").append("<h3>All Players</h3>");
-                data.forEach(function(player) {
-                    var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
-                    $("#players-container").append("<div class='data-list'><p>Name: " + player.name + ", Role: " + player.role + ", Village: " + player.village + "<img src='" + imageSrc + "' height='100'></p><button onclick='deletePlayer(" + player.id + ")'>Delete</button></div>");
+            $.get("/admin/players")
+                .done(function(data) {
+                    console.log("Players fetched:", data);
+                    $("#players-container").empty().append("<h3>All Players</h3>");
+                    data.forEach(function(player) {
+                        var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
+                        $("#players-container").append(
+                            "<div class='data-list'><p>Name: " + player.name + ", Role: " + player.role + 
+                            ", Village: " + player.village + 
+                            "<img src='" + imageSrc + "' alt='Player Image'></p>" +
+                            "<button onclick='deletePlayer(" + player.id + ")'>Delete</button></div>"
+                        );
+                    });
+                })
+                .fail(function(xhr, status, error) {
+                    console.error("Error fetching players:", error);
                 });
-            });
         }
 
         function fetchOwners() {
-            $.get("/admin/owners", function(data) {
-                $("#owners-container").empty();
-                $("#owners-container").append("<h3>All Owners</h3>");
-                data.forEach(function(owner) {
-                    var captainName = owner.captain ? owner.captain.name : "None";
-                    var imageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
-                    $("#owners-container").append("<div class='data-list'><p> " + owner.name + ",  " + captainName + "<img src='" + imageSrc + "' height='100'><button onclick='deleteOwner(" + owner.id + ")'>Delete</button></p></div>");
+            $.get("/admin/owners")
+                .done(function(data) {
+                    console.log("Owners fetched:", data);
+                    $("#owners-container").empty().append("<h3>All Owners</h3>");
+                    data.forEach(function(owner) {
+                        var captainName = owner.captain ? owner.captain.name : "None";
+                        var imageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
+                        $("#owners-container").append(
+                            "<div class='data-list'><p>Name: " + owner.name + ", Captain: " + captainName + 
+                            "<img src='" + imageSrc + "' alt='Owner Image'></p>" +
+                            "<button onclick='deleteOwner(" + owner.id + ")'>Delete</button></div>"
+                        );
+                    });
+                })
+                .fail(function(xhr, status, error) {
+                    console.error("Error fetching owners:", error);
                 });
-            });
         }
 
         function fetchSponsors() {
-            $.get("/admin/sponsors", function(data) {
-                $("#sponsors-container").empty();
-                $("#sponsors-container").append("<h3>All Sponsors</h3>");
-                data.forEach(function(sponsor) {
-                    var imageSrc = sponsor.image ? "data:image/png;base64," + sponsor.image : "";
-                    $("#sponsors-container").append("<div class='data-list'><p>Name: " + sponsor.name + ", Post: " + sponsor.post + ", Amount: " + sponsor.amount + "<img src='" + imageSrc + "' height='100'><button onclick='deleteSponsor(" + sponsor.id + ")'>Delete</button></p></div>");
+            $.get("/admin/sponsors")
+                .done(function(data) {
+                    console.log("Sponsors fetched:", data);
+                    $("#sponsors-container").empty().append("<h3>All Sponsors</h3>");
+                    data.forEach(function(sponsor) {
+                        var imageSrc = sponsor.image ? "data:image/png;base64," + sponsor.image : "";
+                        $("#sponsors-container").append(
+                            "<div class='data-list'><p>Name: " + sponsor.name + ", Post: " + sponsor.post + 
+                            ", Amount: " + sponsor.amount + 
+                            "<img src='" + imageSrc + "' alt='Sponsor Image'></p>" +
+                            "<button onclick='deleteSponsor(" + sponsor.id + ")'>Delete</button></div>"
+                        );
+                    });
+                })
+                .fail(function(xhr, status, error) {
+                    console.error("Error fetching sponsors:", error);
                 });
-            });
         }
 
         function addPlayer() {
@@ -133,7 +171,7 @@
                     fetchPlayers();
                 },
                 error: function(xhr, status, error) {
-                    alert("Error adding player: " + error);
+                    console.error("Error adding player:", error);
                 }
             });
         }
@@ -154,7 +192,7 @@
                     fetchOwners();
                 },
                 error: function(xhr, status, error) {
-                    alert("Error adding owner: " + error);
+                    console.error("Error adding owner:", error);
                 }
             });
         }
@@ -177,29 +215,7 @@
                     fetchSponsors();
                 },
                 error: function(xhr, status, error) {
-                    alert("Error adding sponsor: " + error);
-                }
-            });
-        }
-
-        function addUser() {
-            var formData = new FormData();
-            formData.append("username", $("#user-username").val());
-            formData.append("password", $("#user-password").val());
-            formData.append("role", $("#user-role").val());
-
-            $.ajax({
-                type: "POST",
-                url: "/admin/addUser",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    alert(response);
-                    fetchUsers();
-                },
-                error: function(xhr, status, error) {
-                    alert("Error adding user: " + error);
+                    console.error("Error adding sponsor:", error);
                 }
             });
         }
@@ -214,7 +230,7 @@
                         fetchPlayers();
                     },
                     error: function(xhr, status, error) {
-                        alert("Error deleting player: " + error);
+                        console.error("Error deleting player:", error);
                     }
                 });
             }
@@ -230,7 +246,7 @@
                         fetchOwners();
                     },
                     error: function(xhr, status, error) {
-                        alert("Error deleting owner: " + error);
+                        console.error("Error deleting owner:", error);
                     }
                 });
             }
@@ -246,29 +262,13 @@
                         fetchSponsors();
                     },
                     error: function(xhr, status, error) {
-                        alert("Error deleting sponsor: " + error);
+                        console.error("Error deleting sponsor:", error);
                     }
                 });
             }
         }
 
-        function deleteUser(userId) {
-            if (confirm("Are you sure you want to delete this user?")) {
-                $.ajax({
-                    type: "DELETE",
-                    url: "/admin/deleteUser/" + userId,
-                    success: function(response) {
-                        alert(response);
-                        fetchUsers();
-                    },
-                    error: function(xhr, status, error) {
-                        alert("Error deleting user: " + error);
-                    }
-                });
-            }
-        }
-
-        function setPlayerAsOwner() {
+        function setCaptainForOwner() {
             var ownerId = $("#owner-select").val();
             var playerId = $("#player-select").val();
 
@@ -278,21 +278,42 @@
                 contentType: 'application/json',
                 data: JSON.stringify({ ownerId: ownerId, playerId: playerId }),
                 success: function(response) {
-                    alert('Player set as Owner successfully!');
+                    alert('Player set as Captain successfully!');
                     fetchOwners();
                 },
-                error: function(error) {
-                    console.error('Error setting player as owner:', error);
+                error: function(xhr, status, error) {
+                    console.error('Error setting captain for owner:', error);
                 }
             });
+        }
+
+        function populateOwnerAndPlayerDropdowns() {
+            $.get("/admin/owners")
+                .done(function(data) {
+                    $("#owner-select").empty();
+                    data.forEach(function(owner) {
+                        $("#owner-select").append(
+                            "<option value='" + owner.id + "'>" + owner.name + "</option>"
+                        );
+                    });
+                });
+
+            $.get("/admin/players")
+                .done(function(data) {
+                    $("#player-select").empty();
+                    data.forEach(function(player) {
+                        $("#player-select").append(
+                            "<option value='" + player.id + "'>" + player.name + "</option>"
+                        );
+                    });
+                });
         }
     </script>
 </head>
 <body>
-    <form id="redirectForm" action="/" method="get">
-        <!-- Optional hidden input fields -->
-        <!--<input type="hidden" name="admin" value="${admin}"> !-->
-    </form>
+    <div class="header">
+        <h1>URUL PREMIER LEAGUE</h1>
+    </div>
     <div class="container">
         <div class="section">
             <h3>Add Player</h3>
@@ -308,7 +329,6 @@
                     <option value="All Rounder">All Rounder</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label for="player-village">Village</label>
                 <input type="text" id="player-village" name="player-village">
@@ -361,40 +381,21 @@
         </div>
         <div id="sponsors-container" class="section"></div>
         <div class="section">
-            <h3>Add User</h3>
-            <div class="form-group">
-                <label for="user-username">Username</label>
-                <input type="text" id="user-username" name="user-username">
-            </div>
-            <div class="form-group">
-                <label for="user-password">Password</label>
-                <input type="password" id="user-password" name="user-password">
-            </div>
-            <div class="form-group">
-                <label for="user-role">Role:</label>
-                <select id="user-role" name="user-role">
-                    <option value="admin">Admin</option>
-                    <option value="player">Player</option>
-                    <option value="owner">Owner</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <button onclick="addUser()">Add User</button>
-            </div>
-        </div>
-        <div class="section">
             <h3>Set Captain for Owner</h3>
             <div class="form-group">
-              <label for="owner-select">Select Owner</label>
-              <select id="owner-select" name="owner-select"></select>
+                <label for="owner-select">Select Owner</label>
+                <select id="owner-select" name="owner-select"></select>
             </div>
             <div class="form-group">
-              <label for="player-select">Select Player</label>
-              <select id="player-select" name="player-select"></select>
+                <label for="player-select">Select Player</label>
+                <select id="player-select" name="player-select"></select>
             </div>
-            <button onclick="setPlayerAsOwner()">Set Player as Owner</button>
-          </div>
+            <button onclick="setCaptainForOwner()">Set Player as Owner</button>
+        </div>
         <div id="users-container" class="section"></div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Urul Premier League. All Rights Reserved.</p>
     </div>
 </body>
 </html>
