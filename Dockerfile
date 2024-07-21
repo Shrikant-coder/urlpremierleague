@@ -23,6 +23,9 @@ WORKDIR /app
 # Create directories for text files
 RUN mkdir -p /app/data
 
+# Add this line temporarily to list files in the /app/data directory
+RUN ls -l /app/data
+
 # Copy the packaged WAR file from the build stage and rename it to upl.war
 COPY --from=build /app/target/*.war upl.war
 
