@@ -1,6 +1,7 @@
 package com.upl.controller;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -39,7 +40,14 @@ public class AdminController {
                                             @RequestParam("image") MultipartFile imageFile) {
         try {
             byte[] imageBytes = imageFile.getBytes();
-            Player player = new Player(0, name, role, village, imageBytes);
+            List<Player> list=playerRepository.findAll();
+            long id;
+            if(list.isEmpty()) {
+            	id=0;
+            }else {
+            	id=list.stream().max(Comparator.comparingLong(Player::getId)).get().getId();
+            }
+            Player player = new Player(id+1, name, role, village, imageBytes);
             playerRepository.save(player);
             return ResponseEntity.ok("Player added successfully!");
         } catch (IOException e) {
@@ -52,7 +60,14 @@ public class AdminController {
                                            @RequestParam("image") MultipartFile imageFile) {
         try {
             byte[] imageBytes = imageFile.getBytes();
-            Owner owner = new Owner(0, name, null, imageBytes); // Assuming captain is null for now
+            List<Owner> list=ownerRepository.findAll();
+            long id;
+            if(list.isEmpty()) {
+            	id=0;
+            }else {
+            	id=list.stream().max(Comparator.comparingLong(Owner::getId)).get().getId();
+            }
+            Owner owner = new Owner(id+1, name, null, imageBytes); // Assuming captain is null for now
             ownerRepository.save(owner);
             return ResponseEntity.ok("Owner added successfully!");
         } catch (IOException e) {
@@ -67,7 +82,14 @@ public class AdminController {
                                              @RequestParam("image") MultipartFile imageFile) {
         try {
             byte[] imageBytes = imageFile.getBytes();
-            Sponsor sponsor = new Sponsor(0, name, post, amount, imageBytes);
+            List<Sponsor> list=sponsorRepository.findAll();
+            long id;
+            if(list.isEmpty()) {
+            	id=0;
+            }else {
+            	id=list.stream().max(Comparator.comparingLong(Sponsor::getId)).get().getId();
+            }
+            Sponsor sponsor = new Sponsor(id+1, name, post, amount, imageBytes);
             sponsorRepository.save(sponsor);
             return ResponseEntity.ok("Sponsor added successfully!");
         } catch (IOException e) {
