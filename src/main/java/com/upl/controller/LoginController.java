@@ -20,7 +20,10 @@ public class LoginController {
 	public String loginForm() {
 		return "login"; // Renders login.jsp
 	}
-
+	@GetMapping("/index")
+	public String index() {
+		return "/player/index"; // Renders login.jsp
+	}
 	@GetMapping("owner/index")
 	public String loginForm2(Model model) {
 		return "/owner/index"; // Renders login.jsp
