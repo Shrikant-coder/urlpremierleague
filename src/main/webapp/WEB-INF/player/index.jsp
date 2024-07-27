@@ -7,8 +7,8 @@
     <title>Player Dashboard</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #e0eafc, #cfdef3);
             margin: 0;
             padding: 0;
             color: #333;
@@ -16,7 +16,6 @@
         }
 
         .banner {
-            text-align: center;
             margin-bottom: 20px;
         }
 
@@ -26,11 +25,12 @@
         }
 
         .nav-bar {
-            background-color: #4CAF50;
-            padding: 10px;
+            background: #4CAF50;
             color: white;
-            text-align: center;
-            position: relative;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .nav-bar .dropdown {
@@ -39,44 +39,47 @@
         }
 
         .nav-bar .dropbtn {
-            background-color: #4CAF50;
+            background: #4CAF50;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             font-size: 16px;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav-bar .dropbtn:hover {
+            background: #4CAF50;
         }
 
         .nav-bar .dropdown-content {
             display: none;
             position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            background: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             z-index: 1;
-            text-align: left;
+            min-width: 160px;
             top: 100%; /* Position below the button */
             left: 0;
+            text-align: left;
         }
 
         .nav-bar .dropdown-content a {
-            color: black;
+            color: #333;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
+            border-bottom: 1px solid #ddd;
         }
 
         .nav-bar .dropdown-content a:hover {
-            background-color: #f1f1f1;
+            background: #f1f1f1;
         }
 
         .nav-bar .dropdown:hover .dropdown-content {
             display: block;
-        }
-
-        .nav-bar .sub-dropdown {
-            position: relative;
-            display: inline-block;
         }
 
         .nav-bar .sub-dropdown-content {
@@ -84,22 +87,22 @@
             position: absolute;
             top: 0;
             left: 100%;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            background: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             z-index: 1;
+            min-width: 160px;
             text-align: left;
         }
 
         .nav-bar .sub-dropdown-content a {
-            color: black;
+            color: #333;
             padding: 12px 16px;
             text-decoration: none;
-            display: block;
         }
 
         .nav-bar .sub-dropdown-content a:hover {
-            background-color: #f1f1f1;
+            background: #f1f1f1;
         }
 
         .nav-bar .sub-dropdown:hover .sub-dropdown-content {
@@ -107,25 +110,27 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             box-sizing: border-box;
         }
 
         .details-container {
-            background-color: #fff;
+            background: #ffffff;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin: 20px auto;
             padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: left;
+            font-family: 'Roboto', sans-serif;
         }
 
         .details-container h3 {
             margin-bottom: 20px;
-            font-size: 1.8rem;
-            color: #343a40;
+            font-size: 2rem;
+            color: #333;
+            font-weight: 700;
         }
 
         table {
@@ -138,26 +143,73 @@
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
-            color: #555;
         }
 
         th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.9rem;
+            background: #4CAF50;
+            color: white;
+            font-weight: 700;
         }
 
         tr:nth-child(even) {
-            background-color: #f0f0f0;
+            background: #f9f9f9;
         }
 
         tr:hover {
-            background-color: #e9ecef;
+            background: #f1f1f1;
+        }
+
+        img {
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+
+        img:hover {
+            transform: scale(1.05);
         }
 
         /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .nav-bar .dropbtn {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .nav-bar .dropdown-content {
+                min-width: 140px;
+            }
+
+            .nav-bar .sub-dropdown-content {
+                min-width: 140px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .details-container {
+                padding: 15px;
+            }
+        }
+
         @media (max-width: 768px) {
+            .nav-bar .dropdown-content,
+            .nav-bar .sub-dropdown-content {
+                position: static;
+                box-shadow: none;
+                display: none;
+            }
+
+            .nav-bar .dropdown:hover .dropdown-content,
+            .nav-bar .sub-dropdown:hover .sub-dropdown-content {
+                display: block;
+            }
+
+            .nav-bar .dropbtn {
+                width: 100%;
+                font-size: 16px;
+            }
+
             .container {
                 padding: 10px;
             }
@@ -166,12 +218,28 @@
                 padding: 10px;
             }
 
-            .banner img {
-                width: 150px;
+            table {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-bar .dropbtn {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .details-container {
+                padding: 8px;
             }
 
             table {
                 font-size: 0.8rem;
+            }
+
+            img {
+                height: 80px;
+                width: 80px;
             }
         }
 
@@ -180,19 +248,19 @@
             width: 100%;
             overflow: hidden;
             white-space: nowrap;
-            box-sizing: border-box;
-            background-color: #e9ecef;
-            padding: 10px 0;
-            color: #333;
+            background: #343a40;
+            color: #fff;
+            padding: 10px;
             font-size: 1.2em;
-            font-weight: bold;
+            font-weight: 700;
+            position: relative;
+            box-sizing: border-box;
         }
 
         .marquee span {
             display: inline-block;
             padding-left: 100%;
-            color: red;
-            animation: marquee 25s linear infinite;
+            animation: marquee 20s linear infinite;
         }
 
         @keyframes marquee {
@@ -203,12 +271,40 @@
                 transform: translateX(-100%);
             }
         }
+
+        /* About Us Section */
+        #about-us-container {
+            display: none;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: left;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #about-us-container h3 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        #about-us-container p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #555;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Function to fetch and display player details based on role
         function fetchPlayerDetails(role) {
             $.get("/player/players", function(data) {
+                $("#details-container").show();
+                $("#about-us-container").hide();
                 $("#details-container").empty();
                 $("#details-container").append("<h3>Player Details (" + role + ")</h3>");
                 var tableHtml = "<table><thead><tr><th>Name</th><th>Role</th><th>Village</th><th>Photo</th></tr></thead><tbody>";
@@ -226,13 +322,15 @@
         // Function to fetch and display owner details
         function fetchOwnerDetails() {
             $.get("/owner/owners", function(data) {
+                $("#details-container").show();
+                $("#about-us-container").hide();
                 $("#details-container").empty();
                 $("#details-container").append("<h3>Owner Details</h3>");
                 var tableHtml = "<table><thead><tr><th>Name</th><th>Captain</th><th>Owner Photo</th><th>Captain Photo</th></tr></thead><tbody>";
                 data.forEach(function(owner) {
                     var ownerimageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
                     var captainimageSrc = owner.captain.image ? "data:image/png;base64," + owner.captain.image : "";
-                    tableHtml += "<tr><td>" + owner.name + "</td><td>" + owner.captain.name + "</td><td><img src='" + ownerimageSrc + "' height='100' width='100'></td><td><img src='" + captainimageSrc + "' height='100' width='100'></tr>";
+                    tableHtml += "<tr><td>" + owner.name + "</td><td>" + owner.captain.name + "</td><td><img src='" + ownerimageSrc + "' height='100' width='100'></td><td><img src='" + captainimageSrc + "' height='100' width='100'></td></tr>";
                 });
                 tableHtml += "</tbody></table>";
                 $("#details-container").append(tableHtml);
@@ -244,6 +342,8 @@
         // Function to fetch and display sponsor details
         function fetchSponsorDetails() {
             $.get("/sponsors", function(data) {
+                $("#details-container").show();
+                $("#about-us-container").hide();
                 $("#details-container").empty();
                 $("#details-container").append("<h3>Sponsor Details</h3>");
                 var tableHtml = "<table><thead><tr><th>Name</th><th>Sneh</th><th>Amount</th><th>Photo</th></tr></thead><tbody>";
@@ -263,16 +363,22 @@
             fetchSponsorDetails();
 
             // Function to show dropdown menu and fetch player details
-            $(".sub-dropdown-content a").click(function() {
+            $(".sub-dropdown-content a").on("click", function() {
                 var role = $(this).text();
                 fetchPlayerDetails(role);
+            });
+
+            // Function to show About Us section
+            $(".dropdown-content a[href='#about']").on("click", function() {
+                $("#details-container").hide();
+                $("#about-us-container").show();
             });
         });
     </script>
 </head>
 <body>
     <div class="banner">
-        <header style="background-color: #4CAF50; color: white; text-align: center; padding: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <header style="background-color: #4CAF50; color: white; padding: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
             <h1 style="margin: 0; font-size: 2.5em;">URUL PREMIER LEAGUE</h1>
             <p style="margin: 10px 0 0; font-size: 1.2em;">Welcome to URUL PREMIER LEAGUE</p>
         </header>
@@ -291,7 +397,8 @@
                         <a href="#">Batsman</a>
                         <a href="#">All Rounder</a>
                     </div>
-                </div> 
+                </div>
+                <a href="#about" onclick="showAboutUs()">About Us</a>
             </div>
         </div>
     </div>
@@ -302,6 +409,17 @@
         <div class="details-container" id="details-container">
             <!-- Details will be fetched and displayed here -->
         </div>
+        <div id="about-us-container">
+            <h3>About Us</h3>
+            <p><b>Owner</b> - Owner होण्यासाठी आपल्याला UPL समितीकडे 5000 जमा करावे लागतील आणि इथे लिस्टेड असलेल्या खेळाडूंपैकी आपल्याला खेळाडू निवडावे लागतील. लीगसाठी आपण कोणत्याही खेळाडूसाठी इच्छा दाखवू शकता आणि त्यासाठी आपल्याला काही पॉइंट्स खर्च करावे लागतील. आपल्या कडे एकूण 500 पॉइंट्स असतील, त्यातून आपल्याला 12 खेळाडू निवडावे लागतील. आपल्याला कॅप्टन निवडण्याची मुभा असेल आणि त्यासाठी आपल्याला कोणतीच बोली लावावी लागणार नाही. Owner प्लेइंग 11 मध्ये सुद्धा खेळू शकतो.</p>
+            <p><b>Player</b> - आपल्याला UPL मध्ये भाग घेण्यासाठी पहिल्यांदा फॉर्म भरावा लागेल. UPL समिती फॉर्म प्रदान करेल आणि प्रत्येक फॉर्मची फी 100 रुपये असेल. आपली निवड जो कोणी Owner करेल त्या टीममध्ये आपल्याला प्रामाणिकपणे खेळावे लागेल. आपल्याला प्रत्येक मॅचमध्ये मॅन ऑफ द मॅच मिळेल आणि सोबत मेडल देखील मिळेल आणि आपला खेळ दाखवण्याची संधी मिळेल. अधिक माहितीसाठी UPL समितीशी संपर्क साधा.</p>
+        </div>
     </div>
+    <script>
+        function showAboutUs() {
+            document.getElementById("about-us-container").style.display = "block";
+            document.getElementById("details-container").style.display = "none";
+        }
+    </script>
 </body>
 </html>
