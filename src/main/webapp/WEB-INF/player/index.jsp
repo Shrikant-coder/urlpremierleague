@@ -385,7 +385,7 @@
     </div>
     <div class="nav-bar">
         <div class="dropdown">
-            <button class="dropbtn">Menu</button>
+            <button class="dropbtn"><b>Menu...</b></button>
             <div class="dropdown-content">
                 <a href="#" onclick="fetchOwnerDetails()">Owner Details</a>
                 <a href="#" onclick="fetchSponsorDetails()">Sponsor Details</a>
@@ -412,7 +412,8 @@
         <div id="about-us-container">
             <h3>About Tournament</h3>
             <p><b>Owner</b> - Owner होण्यासाठी आपल्याला UPL समितीकडे 5000 जमा करावे लागतील (प्रथम ६ टीम्स नोंदविल्या जातील, त्यापेक्षा जास्त टीम्स घेतल्या जाणार नाहीत.) आणि इथे लिस्टेड असलेल्या खेळाडूंपैकी आपल्याला खेळाडू निवडावे लागतील. लीगसाठी आपण कोणत्याही खेळाडूसाठी इच्छा दाखवू शकता आणि त्यासाठी आपल्याला काही पॉइंट्स खर्च करावे लागतील. आपल्या कडे एकूण 500 पॉइंट्स असतील, त्यातून आपल्याला 12 खेळाडू निवडावे लागतील. आपल्याला कॅप्टन निवडण्याची मुभा असेल आणि त्यासाठी आपल्याला कोणतीच बोली लावावी लागणार नाही. Owner प्लेइंग 11 मध्ये सुद्धा खेळू शकतो.प्रत्येक टीममध्ये कमीत कमी १ खेळाडू थॉमसे किंवा मोरेवाडीचा, १ खेळाडू उरुल किंवा शिवाजीनगरचा, १ खेळाडू पांडवनगरचा, आणि १ खेळाडू गाणेवाडीचा असणे आवश्यक आहे.</p>
-            <p><b>Player</b> - आपल्याला UPL मध्ये भाग घेण्यासाठी पहिल्यांदा फॉर्म भरावा लागेल. UPL समिती फॉर्म प्रदान करेल आणि प्रत्येक फॉर्मची फी 100 रुपये असेल. आपली निवड जो कोणी Owner करेल त्या टीममध्ये आपल्याला प्रामाणिकपणे खेळावे लागेल. आपल्याला प्रत्येक मॅचमध्ये मॅन ऑफ द मॅच मिळेल आणि सोबत मेडल देखील मिळेल आणि आपला खेळ दाखवण्याची संधी मिळेल. अधिक माहितीसाठी UPL समितीशी संपर्क साधा.</p>
+            <p><b>Player</b> - आपल्याला UPL मध्ये भाग घेण्यासाठी पहिल्यांदा फॉर्म भरावा लागेल. UPL समिती फॉर्म प्रदान करेल आणि प्रत्येक फॉर्मची फी 100 रुपये असेल. आपली निवड जो कोणी Owner करेल त्या टीममध्ये आपल्याला प्रामाणिकपणे खेळावे लागेल 
+                <b>जर आपली निवड कोणत्याच टीममध्ये झाली नसेल तर फॉर्म फी परत केली जाणार नाही, याची खेळाडूने नोंद घ्यावी</b>. आपल्याला प्रत्येक मॅचमध्ये मॅन ऑफ द मॅच मिळेल आणि सोबत मेडल देखील मिळेल आणि आपला खेळ दाखवण्याची संधी मिळेल. अधिक माहितीसाठी UPL समितीशी संपर्क साधा.</p>
         </div>
     </div>
     <script>
@@ -421,5 +422,80 @@
             document.getElementById("details-container").style.display = "none";
         }
     </script>
+     <style>
+        /* Basic styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #e0eafc, #cfdef3);
+            margin: 0;
+            padding: 0;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Nav-bar styling */
+        .nav-bar {
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Hamburger menu button styling */
+        .dropbtn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            padding: 10px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .dropbtn:hover, .dropbtn:focus {
+            color: #FFEB3B; /* Highlight color on hover */
+        }
+
+        .dropbtn .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px 0;
+            background-color: white;
+            transition: 0.3s;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            min-width: 160px;
+            text-align: left;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dropdown-content a:hover {
+            background: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
 </body>
 </html>

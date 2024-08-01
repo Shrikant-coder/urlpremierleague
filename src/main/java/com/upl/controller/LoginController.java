@@ -28,7 +28,7 @@ public class LoginController {
 	@GetMapping("admin/index")
 	public String loginForm4(Model model) {
 		 model.addAttribute("admin", admin);
-		return "/player/index"; // Renders login.jsp
+		return "/admin/index"; // Renders login.jsp
 	}
 
 	@GetMapping("player/index")
