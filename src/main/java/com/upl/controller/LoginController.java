@@ -18,21 +18,17 @@ public class LoginController {
 
 	@GetMapping("/")
 	public String loginForm() {
-		return "login"; // Renders login.jsp
+		return "/player/index"; // Renders login.jsp
 	}
 	@GetMapping("/index")
 	public String index() {
 		return "/player/index"; // Renders login.jsp
 	}
-	@GetMapping("owner/index")
-	public String loginForm2(Model model) {
-		return "/owner/index"; // Renders login.jsp
-	}
 
 	@GetMapping("admin/index")
 	public String loginForm4(Model model) {
 		 model.addAttribute("admin", admin);
-		return "/admin/index"; // Renders login.jsp
+		return "/player/index"; // Renders login.jsp
 	}
 
 	@GetMapping("player/index")
