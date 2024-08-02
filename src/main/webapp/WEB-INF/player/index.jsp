@@ -374,6 +374,52 @@
                 $("#about-us-container").show();
             });
         });
+        $(document).ready(function() {
+    // Function to toggle dropdown visibility
+    function toggleDropdown(element) {
+        var dropdownContent = $(element).siblings('.dropdown-content');
+        var isVisible = dropdownContent.is(':visible');
+        $('.dropdown-content').hide(); // Hide all dropdowns
+        if (!isVisible) {
+            dropdownContent.show(); // Show the clicked dropdown
+        }
+    }
+
+    // Toggle dropdown on button click
+    $(".dropbtn").on("click", function(event) {
+        event.stopPropagation(); // Prevent click from propagating to document
+        toggleDropdown(this);
+    });
+
+    // Close dropdowns when clicking outside
+    $(document).on("click", function(event) {
+        if (!$(event.target).closest('.dropdown').length) {
+            $('.dropdown-content').hide();
+        }
+    });
+
+    // Prevent closing main dropdown when clicking on items with sub-dropdowns
+    $(".dropdown-content > a").on("click", function(event) {
+        var subDropdown = $(this).siblings('.sub-dropdown-content');
+        if (subDropdown.length > 0) {
+            event.stopPropagation(); // Prevent closing
+        } else {
+            $('.dropdown-content').hide(); // Close dropdown if no sub-dropdown
+        }
+    });
+
+    // Close main dropdown when clicking on sub-dropdown items
+    $(".sub-dropdown-content a").on("click", function(event) {
+        $('.dropdown-content').hide(); // Close main dropdown
+    });
+
+    // Prevent closing of sub-dropdown when clicking inside
+    $(".sub-dropdown-content").on("click", function(event) {
+        event.stopPropagation(); // Prevent closing of parent dropdown
+    });
+});
+
+
     </script>
 </head>
 <body>
