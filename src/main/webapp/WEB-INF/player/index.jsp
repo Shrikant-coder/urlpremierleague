@@ -300,40 +300,52 @@
             line-height: 1.6;
             color: #555;
         }
-         /* Loader styling */
-         #loader {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1001;
-            display: none;
-        }
-        
-        .spinner {
-            border: 16px solid #f3f3f3;
-            border-top: 16px solid #3498db;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            animation: spin 2s linear infinite;
-        }
+        #overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Black background with 50% opacity */
+    z-index: 1000; /* Place overlay behind the loader */
+    display: none; /* Hidden by default */
+}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+#loader {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001; /* Place loader above the overlay */
+    display: none; /* Hidden by default */
+}
+
+.spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
        // Function to show the loader
-function showLoader() {
-    $("#loader").show();
+       function showLoader() {
+    $("#overlay").show(); // Show the overlay
+    $("#loader").show();  // Show the loader
 }
 
-// Function to hide the loader
 function hideLoader() {
-    $("#loader").hide();
+    $("#overlay").hide(); // Hide the overlay
+    $("#loader").hide();  // Hide the loader
 }
 
 // Function to fetch and display player details based on role
@@ -476,6 +488,10 @@ $(document).ready(function() {
     <div id="loader">
         <div class="spinner"></div>
     </div>
+    <div id="overlay"></div>
+<div id="loader">
+    <div class="spinner"></div>
+</div>
     <div class="banner">
         <header style="background-color: #4CAF50; color: white; padding: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
             <h1 style="margin: 0; font-size: 2.5em;">URUL PREMIER LEAGUE</h1>
