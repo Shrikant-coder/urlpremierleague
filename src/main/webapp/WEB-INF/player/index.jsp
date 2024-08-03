@@ -467,10 +467,15 @@ $(document).ready(function() {
 });
 
 
-
+$(document).ready(function() {
+    console.log("jQuery is working!");
+});
     </script>
 </head>
 <body>
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
     <div class="banner">
         <header style="background-color: #4CAF50; color: white; padding: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
             <h1 style="margin: 0; font-size: 2.5em;">URUL PREMIER LEAGUE</h1>
