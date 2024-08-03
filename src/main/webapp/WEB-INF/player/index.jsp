@@ -39,19 +39,22 @@
         }
 
         .nav-bar .dropbtn {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background 0.3s;
+            background-color: #b4d816; /* Purple background */
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 20px 40px; /* Larger padding */
+    font-size: 24px; /* Bigger font size */
+    font-weight: bold; /* Bold font */
+    cursor: pointer; /* Pointer cursor */
+    border-radius: 10px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow */
+    margin: 10px; /* Margin for spacing */
+    box-sizing: border-box; /* Include padding and border in element's width and height */
+    width: 160px; /* Fixed width */
+           
         }
 
-        .nav-bar .dropbtn:hover {
-            background: #4CAF50;
-        }
 
         .nav-bar .dropdown-content {
             display: none;
@@ -207,7 +210,7 @@
 
             .nav-bar .dropbtn {
                 width: 100%;
-                font-size: 16px;
+                font-size: 25px;
             }
 
             .container {
@@ -225,7 +228,7 @@
 
         @media (max-width: 480px) {
             .nav-bar .dropbtn {
-                font-size: 14px;
+                font-size: 25px;
                 padding: 8px;
             }
 
@@ -300,81 +303,102 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Function to fetch and display player details based on role
-        function fetchPlayerDetails(role) {
-            $.get("/player/players", function(data) {
-                $("#details-container").show();
-                $("#about-us-container").hide();
-                $("#details-container").empty();
-                $("#details-container").append("<h3>Player Details (" + role + ")</h3>");
-                var tableHtml = "<table><thead><tr><th>Name</th><th>Role</th><th>Village</th><th>Photo</th></tr></thead><tbody>";
-                data.forEach(function(player) {
-                    if (player.role === role || role === "All") { // Filter by selected role or show all
-                        var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
-                        tableHtml += "<tr><td>" + player.name + "</td><td>" + player.role + "</td><td>" + player.village + "</td><td><img src='" + imageSrc + "' height='100' width='100'></td></tr>";
-                    }
-                });
-                tableHtml += "</tbody></table>";
-                $("#details-container").append(tableHtml);
-            });
-        }
+       // Function to show the loader
+function showLoader() {
+    $("#loader").show();
+}
 
-        // Function to fetch and display owner details
-        function fetchOwnerDetails() {
-            $.get("/owner/owners", function(data) {
-                $("#details-container").show();
-                $("#about-us-container").hide();
-                $("#details-container").empty();
-                $("#details-container").append("<h3>Owner Details</h3>");
-                var tableHtml = "<table><thead><tr><th>Name</th><th>Captain</th><th>Owner Photo</th><th>Captain Photo</th></tr></thead><tbody>";
-                data.forEach(function(owner) {
-                    var ownerimageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
-                    var captainimageSrc = owner.captain.image ? "data:image/png;base64," + owner.captain.image : "";
-                    tableHtml += "<tr><td>" + owner.name + "</td><td>" + owner.captain.name + "</td><td><img src='" + ownerimageSrc + "' height='100' width='100'></td><td><img src='" + captainimageSrc + "' height='100' width='100'></td></tr>";
-                });
-                tableHtml += "</tbody></table>";
-                $("#details-container").append(tableHtml);
-            }).fail(function() {
-                alert("Error fetching owner details.");
-            });
-        }
+// Function to hide the loader
+function hideLoader() {
+    $("#loader").hide();
+}
 
-        // Function to fetch and display sponsor details
-        function fetchSponsorDetails() {
-            $.get("/sponsors", function(data) {
-                $("#details-container").show();
-                $("#about-us-container").hide();
-                $("#details-container").empty();
-                $("#details-container").append("<h3>Sponsor Details</h3>");
-                var tableHtml = "<table><thead><tr><th>Name</th><th>Sneh</th><th>Amount</th><th>Photo</th></tr></thead><tbody>";
-                data.forEach(function(sponsor) {
-                    var imageSrc = sponsor.image ? "data:image/png;base64," + sponsor.image : "";
-                    tableHtml += "<tr><td>" + sponsor.name + "</td><td>" + sponsor.post + "</td><td>" + sponsor.amount + "</td><td><img src='" + imageSrc + "' height='100' width='100'></td></tr>";
-                });
-                tableHtml += "</tbody></table>";
-                $("#details-container").append(tableHtml);
-            }).fail(function() {
-                alert("Error fetching sponsor details.");
-            });
-        }
-
-        $(document).ready(function() {
-            // Load sponsor details by default
-            fetchSponsorDetails();
-
-            // Function to show dropdown menu and fetch player details
-            $(".sub-dropdown-content a").on("click", function() {
-                var role = $(this).text();
-                fetchPlayerDetails(role);
-            });
-
-            // Function to show About Us section
-            $(".dropdown-content a[href='#about']").on("click", function() {
-                $("#details-container").hide();
-                $("#about-us-container").show();
-            });
+// Function to fetch and display player details based on role
+function fetchPlayerDetails(role) {
+    showLoader(); // Show loader when fetching data
+    $.get("/player/players", function(data) {
+        $("#details-container").show();
+        $("#about-us-container").hide();
+        $("#details-container").empty();
+        $("#details-container").append("<h3>Player Details (" + role + ")</h3>");
+        var tableHtml = "<table><thead><tr><th>Name</th><th>Role</th><th>Village</th><th>Photo</th></tr></thead><tbody>";
+        data.forEach(function(player) {
+            if (player.role === role || role === "All") { // Filter by selected role or show all
+                var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
+                tableHtml += "<tr><td>" + player.name + "</td><td>" + player.role + "</td><td>" + player.village + "</td><td><img src='" + imageSrc + "' height='100' width='100'></td></tr>";
+            }
         });
-        $(document).ready(function() {
+        tableHtml += "</tbody></table>";
+        $("#details-container").append(tableHtml);
+        hideLoader(); // Hide loader after fetching data
+    }).fail(function() {
+        alert("Error fetching player details.");
+        hideLoader(); // Hide loader if there's an error
+    });
+}
+
+// Function to fetch and display owner details
+function fetchOwnerDetails() {
+    showLoader(); // Show loader when fetching data
+    $.get("/owner/owners", function(data) {
+        $("#details-container").show();
+        $("#about-us-container").hide();
+        $("#details-container").empty();
+        $("#details-container").append("<h3>Owner Details</h3>");
+        var tableHtml = "<table><thead><tr><th>Name</th><th>Captain</th><th>Owner Photo</th><th>Captain Photo</th></tr></thead><tbody>";
+        data.forEach(function(owner) {
+            var ownerimageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
+            var captainimageSrc = owner.captain.image ? "data:image/png;base64," + owner.captain.image : "";
+            tableHtml += "<tr><td>" + owner.name + "</td><td>" + owner.captain.name + "</td><td><img src='" + ownerimageSrc + "' height='100' width='100'></td><td><img src='" + captainimageSrc + "' height='100' width='100'></td></tr>";
+        });
+        tableHtml += "</tbody></table>";
+        $("#details-container").append(tableHtml);
+        hideLoader(); // Hide loader after fetching data
+    }).fail(function() {
+        alert("Error fetching owner details.");
+        hideLoader(); // Hide loader if there's an error
+    });
+}
+
+// Function to fetch and display sponsor details
+function fetchSponsorDetails() {
+    showLoader(); // Show loader when fetching data
+    $.get("/sponsors", function(data) {
+        $("#details-container").show();
+        $("#about-us-container").hide();
+        $("#details-container").empty();
+        $("#details-container").append("<h3>Sponsor Details</h3>");
+        var tableHtml = "<table><thead><tr><th>Name</th><th>Sneh</th><th>Amount</th><th>Photo</th></tr></thead><tbody>";
+        data.forEach(function(sponsor) {
+            var imageSrc = sponsor.image ? "data:image/png;base64," + sponsor.image : "";
+            tableHtml += "<tr><td>" + sponsor.name + "</td><td>" + sponsor.post + "</td><td>" + sponsor.amount + "</td><td><img src='" + imageSrc + "' height='100' width='100'></td></tr>";
+        });
+        tableHtml += "</tbody></table>";
+        $("#details-container").append(tableHtml);
+        hideLoader(); // Hide loader after fetching data
+    }).fail(function() {
+        alert("Error fetching sponsor details.");
+        hideLoader(); // Hide loader if there's an error
+    });
+}
+
+$(document).ready(function() {
+    // Load sponsor details by default
+    fetchSponsorDetails();
+
+    // Function to show dropdown menu and fetch player details
+    $(".sub-dropdown-content a").on("click", function() {
+        var role = $(this).text();
+        fetchPlayerDetails(role);
+    });
+
+    // Function to show About Us section
+    $(".dropdown-content a[href='#about']").on("click", function() {
+        $("#details-container").hide();
+        $("#about-us-container").show();
+    });
+});
+$(document).ready(function() {
     // Function to toggle dropdown visibility
     function toggleDropdown(element) {
         var dropdownContent = $(element).siblings('.dropdown-content');
@@ -420,6 +444,7 @@
 });
 
 
+
     </script>
 </head>
 <body>
@@ -431,7 +456,7 @@
     </div>
     <div class="nav-bar">
         <div class="dropdown">
-            <button class="dropbtn"><b>Menu...</b></button>
+            <button class="dropbtn"><b>Menu</b></button>
             <div class="dropdown-content">
                 <a href="#" onclick="fetchOwnerDetails()">Owner Details</a>
                 <a href="#" onclick="fetchSponsorDetails()">Sponsor Details</a>
@@ -478,7 +503,19 @@
             color: #333;
             text-align: center;
         }
-
+        .dropbtn {
+    background-color: #4d0298; /* Green background */
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 20px 40px; /* Larger padding */
+    font-size: 24px; /* Bigger font size */
+    font-weight: bold; /* Bold font */
+    cursor: pointer; /* Pointer cursor */
+    border-radius: 10px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow */
+    margin: 10px; /* Margin for spacing */
+}
         /* Nav-bar styling */
         .nav-bar {
             background: #4CAF50;
@@ -489,23 +526,7 @@
             z-index: 1000;
         }
 
-        /* Hamburger menu button styling */
-        .dropbtn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            padding: 10px;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .dropbtn:hover, .dropbtn:focus {
-            color: #FFEB3B; /* Highlight color on hover */
-        }
+        
 
         .dropbtn .bar {
             display: block;
