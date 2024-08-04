@@ -78,7 +78,7 @@ public class AdminController {
     @PostMapping("/addSponsor")
     public ResponseEntity<String> addSponsor(@RequestParam("name") String name,
                                              @RequestParam("post") String post,
-                                             @RequestParam("amount") String amount,
+                                             @RequestParam("amount") int amount,
                                              @RequestParam("image") MultipartFile imageFile) {
         try {
             byte[] imageBytes = imageFile.getBytes();
@@ -129,7 +129,7 @@ public class AdminController {
 
     @GetMapping("/sponsors")
     public List<Sponsor> getSponsors() {
-        return sponsorRepository.findAll();
+        return sponsorRepository.findAll().stream().sorted(Comparator.comparing(Sponsor::getAmount).reversed()).toList();
     }
 
     @PostMapping("/setCaptain")

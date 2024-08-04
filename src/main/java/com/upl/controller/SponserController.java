@@ -1,6 +1,9 @@
 package com.upl.controller;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +24,10 @@ public class SponserController {
 	private SponsorRepository sponsorService;
 
 	@GetMapping("/sponsors")
-	public ResponseEntity<List<Sponsor>> getAllSponsor() {
-		return ResponseEntity.ok(sponsorService.findAll());
+	public List<Sponsor> getAllSponsor() {
+		List<Sponsor> list=sponsorService.findAll();
+		Collections.sort(list,Comparator.comparing(Sponsor::getAmount).reversed());
+		return list;
 	}
 
 	@PostMapping("/addSponsor")

@@ -16,7 +16,7 @@ public class Sponsor {
 
 	private String name;
 	private String post;
-	private String amount;
+	private int amount;
 	@Lob
 	@Column(name = "image", nullable = true) // Adjust nullable based on your requirements
 	private byte[] image;
@@ -53,11 +53,11 @@ public class Sponsor {
 		this.post = post;
 	}
 
-	public String getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
@@ -66,7 +66,7 @@ public class Sponsor {
 		return "Sponser [id=" + id + ", name=" + name + ", post=" + post + ", amount=" + amount + "]";
 	}
 
-	public Sponsor(long id, String name, String post, String amount, byte[] image) {
+	public Sponsor(long id, String name, String post, int amount, byte[] image) {
 		this.id = id;
 		this.name = name;
 		this.post = post;
