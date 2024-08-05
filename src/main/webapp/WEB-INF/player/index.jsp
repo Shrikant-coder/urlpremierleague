@@ -33,7 +33,7 @@
     background: #4CAF50;
     color: white;
     padding: 10px;
-    position: sticky;
+    position: relative;
     top: 0;
     z-index: 1000;
 }
@@ -70,6 +70,7 @@
     top: 100%;
     left: 0;
     text-align: left;
+    padding: 0; /* Remove padding if causing issues */
 }
 
 .nav-bar .dropdown-content a {
@@ -88,32 +89,6 @@
     display: block;
 }
 
-.nav-bar .sub-dropdown-content {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    background: #ffffff;
-    border-radius: 5px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    min-width: 160px;
-    text-align: left;
-}
-
-.nav-bar .sub-dropdown-content a {
-    color: #333;
-    padding: 12px 16px;
-    text-decoration: none;
-}
-
-.nav-bar .sub-dropdown-content a:hover {
-    background: #f1f1f1;
-}
-
-.nav-bar .sub-dropdown:hover .sub-dropdown-content {
-    display: block;
-}
 
 .container {
     max-width: 1200px;
@@ -321,10 +296,57 @@ img:hover {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+/* Modal container */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9999; /* High z-index to sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.7); /* Black background with opacity */
+}
+
+/* Modal content */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%; /* Adjust based on needs */
+    max-width: 700px; /* Adjust based on needs */
+}
+
+/* Caption of modal */
+#caption {
+    margin: 10px auto;
+    text-align: center;
+    color: #ccc;
+}
+
+/* The close button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Close button hover effect */
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
 
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+   
        // Function to show the loader
        function showLoader() {
     $("#overlay").show(); // Show the overlay
@@ -335,7 +357,35 @@ function hideLoader() {
     $("#overlay").hide(); // Hide the overlay
     $("#loader").hide();  // Hide the loader
 }
+// Function to open the modal
+function openModal(imageSrc) {
+    var modal = document.getElementById("image-modal");
+    var modalImg = document.getElementById("modal-image");
+    var captionText = document.getElementById("caption");
+    modal.style.display = "block";
+    modalImg.src = imageSrc;
+    captionText.innerHTML = ""; // Optionally set caption
+}
 
+// Function to close the modal
+function closeModal() {
+    var modal = document.getElementById("image-modal");
+    modal.style.display = "none";
+}
+
+// Add event listener to close button
+document.addEventListener('DOMContentLoaded', function() {
+    var closeBtn = document.querySelector("#image-modal .close");
+    closeBtn.addEventListener('click', closeModal);
+    
+    // Close the modal when clicking outside of it
+    window.addEventListener('click', function(event) {
+        var modal = document.getElementById("image-modal");
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+});
 // Function to fetch and display player details based on role
 function fetchPlayerDetails(role) {
     showLoader(); // Show loader when fetching data
@@ -348,7 +398,7 @@ function fetchPlayerDetails(role) {
         data.forEach(function(player) {
             if (player.role === role || role === "All") { // Filter by selected role or show all
                 var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
-                tableHtml += "<tr><td>" + player.name + "</td><td>" + player.role + "</td><td>" + player.village + "</td><td><img src='" + imageSrc + "' height='100' width='100'></td></tr>";
+                tableHtml += "<tr><td>" + player.name + "</td><td>" + player.role + "</td><td>" + player.village + "</td><td><img src='" + imageSrc + "' height='100' width='100' onclick='openModal(\"" + imageSrc + "\")'></td></tr>";
             }
         });
         tableHtml += "</tbody></table>";
@@ -370,9 +420,9 @@ function fetchOwnerDetails() {
         $("#details-container").append("<h3>Owner Details</h3>");
         var tableHtml = "<table><thead><tr><th>Name</th><th>Captain</th><th>Owner Photo</th><th>Captain Photo</th></tr></thead><tbody>";
         data.forEach(function(owner) {
-            var ownerimageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
-            var captainimageSrc = owner.captain.image ? "data:image/png;base64," + owner.captain.image : "";
-            tableHtml += "<tr><td>" + owner.name + "</td><td>" + owner.captain.name + "</td><td><img src='" + ownerimageSrc + "' height='100' width='100'></td><td><img src='" + captainimageSrc + "' height='100' width='100'></td></tr>";
+            var ownerImageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
+            var captainImageSrc = owner.captain.image ? "data:image/png;base64," + owner.captain.image : "";
+            tableHtml += "<tr><td>" + owner.name + "</td><td>" + owner.captain.name + "</td><td><img src='" + ownerImageSrc + "' height='100' width='100' onclick='openModal(\"" + ownerImageSrc + "\")'></td><td><img src='" + captainImageSrc + "' height='100' width='100' onclick='openModal(\"" + captainImageSrc + "\")'></td></tr>";
         });
         tableHtml += "</tbody></table>";
         $("#details-container").append(tableHtml);
@@ -394,7 +444,7 @@ function fetchSponsorDetails() {
         var tableHtml = "<table><thead><tr><th>Name</th><th>Sneh</th><th>Amount</th><th>Photo</th></tr></thead><tbody>";
         data.forEach(function(sponsor) {
             var imageSrc = sponsor.image ? "data:image/png;base64," + sponsor.image : "";
-            tableHtml += "<tr><td>" + sponsor.name + "</td><td>" + sponsor.post + "</td><td>" + sponsor.amount + "</td><td><img src='" + imageSrc + "' height='100' width='100'></td></tr>";
+            tableHtml += "<tr><td>" + sponsor.name + "</td><td>" + sponsor.post + "</td><td>" + sponsor.amount + "</td><td><img src='" + imageSrc + "' height='100' width='100' onclick='openModal(\"" + imageSrc + "\")'></td></tr>";
         });
         tableHtml += "</tbody></table>";
         $("#details-container").append(tableHtml);
@@ -490,7 +540,7 @@ $(document).ready(function() {
         <div class="dropdown">
             <button class="dropbtn" onclick="fetchOwnerDetails()">Owners</button>
         </div>
-        <div class="dropdown">
+       
         
                 <div class="dropdown">
                     <button class="dropbtn">Players</button>
@@ -504,13 +554,17 @@ $(document).ready(function() {
                 </div>
                
             
-        </div>
         <div class="dropdown">
             <button class="dropbtn" onclick="fetchSponsorDetails()">Sponsors</button>
         </div>
         <div class="dropdown">
             <button class="dropbtn" onclick="showAboutUs()">About</button>
         </div>
+    </div>
+    <div id="image-modal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modal-image">
+        <div id="caption"></div>
     </div>
     <div class="container">
         <div class="marquee">
@@ -532,76 +586,5 @@ $(document).ready(function() {
             document.getElementById("details-container").style.display = "none";
         }
     </script>
-     <style>
-        /* Basic styling */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to right, #e0eafc, #cfdef3);
-            margin: 0;
-            padding: 0;
-            color: #333;
-            text-align: center;
-        }
-        .dropbtn {
-    background-color: #4d0298; /* Green background */
-    border: none; /* Remove border */
-    color: white; /* White text */
-    padding: 20px 40px; /* Larger padding */
-    font-size: 24px; /* Bigger font size */
-    font-weight: bold; /* Bold font */
-    cursor: pointer; /* Pointer cursor */
-    border-radius: 10px; /* Rounded corners */
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow */
-    margin: 10px; /* Margin for spacing */
-}
-        /* Nav-bar styling */
-        .nav-bar {
-            background: #4CAF50;
-            color: white;
-            padding: 10px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        
-
-        .dropbtn .bar {
-            display: block;
-            width: 15px;
-            height: 3px;
-            margin: 5px 0;
-            background-color: white;
-            transition: 0.3s;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background: #ffffff;
-            border-radius: 5px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            min-width: 160px;
-            text-align: left;
-        }
-
-        .dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .dropdown-content a:hover {
-            background: #f1f1f1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-    </style>
 </body>
 </html>
