@@ -6,245 +6,233 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Dashboard</title>
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to right, #e0eafc, #cfdef3);
-            margin: 0;
-            padding: 0;
-            color: #333;
-            text-align: center;
-        }
+      body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #e0eafc, #cfdef3);
+    margin: 0;
+    padding: 0;
+    color: #333;
+    text-align: center;
+    box-sizing: border-box;
+}
 
-        .banner {
-            margin-bottom: 20px;
-        }
+*, *::before, *::after {
+    box-sizing: inherit;
+}
 
-        .banner img {
-            max-width: 100%;
-            height: auto;
-        }
+.banner {
+    margin-bottom: 20px;
+}
 
-        .nav-bar {
-            background: #4CAF50;
-            color: white;
-            padding: 10px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+.banner img {
+    max-width: 100%;
+    height: auto;
+}
 
-        .nav-bar .dropdown {
-            position: relative;
-            display: inline-block;
-        }
+.nav-bar {
+    background: #4CAF50;
+    color: white;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
-        .nav-bar .dropbtn {
-            background-color: #b4d816; /* Purple background */
-    border: none; /* Remove border */
-    color: white; /* White text */
-    padding: 20px 40px; /* Larger padding */
-    font-size: 24px; /* Bigger font size */
-    font-weight: bold; /* Bold font */
-    cursor: pointer; /* Pointer cursor */
-    border-radius: 10px; /* Rounded corners */
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow */
-    margin: 10px; /* Margin for spacing */
-    box-sizing: border-box; /* Include padding and border in element's width and height */
-    width: 160px; /* Fixed width */
-           
-        }
+.nav-bar .dropdown {
+    position: relative;
+    display: inline-block;
+}
 
+.nav-bar .dropbtn {
+    background-color: #b4d816;
+    border: none;
+    color: white;
+    padding: 20px 40px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    box-sizing: border-box;
+    width: 160px;
+}
 
-        .nav-bar .dropdown-content {
-            display: none;
-            position: absolute;
-            background: #ffffff;
-            border-radius: 5px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            min-width: 160px;
-            top: 100%; /* Position below the button */
-            left: 0;
-            text-align: left;
-        }
+.nav-bar .dropdown-content {
+    display: none;
+    position: absolute;
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 160px;
+    top: 100%;
+    left: 0;
+    text-align: left;
+}
 
-        .nav-bar .dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            border-bottom: 1px solid #ddd;
-        }
+.nav-bar .dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #ddd;
+}
 
-        .nav-bar .dropdown-content a:hover {
-            background: #f1f1f1;
-        }
+.nav-bar .dropdown-content a:hover {
+    background: #f1f1f1;
+}
 
-        .nav-bar .dropdown:hover .dropdown-content {
-            display: block;
-        }
+.nav-bar .dropdown:hover .dropdown-content {
+    display: block;
+}
 
-        .nav-bar .sub-dropdown-content {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 100%;
-            background: #ffffff;
-            border-radius: 5px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            min-width: 160px;
-            text-align: left;
-        }
+.nav-bar .sub-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 160px;
+    text-align: left;
+}
 
-        .nav-bar .sub-dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-        }
+.nav-bar .sub-dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+}
 
-        .nav-bar .sub-dropdown-content a:hover {
-            background: #f1f1f1;
-        }
+.nav-bar .sub-dropdown-content a:hover {
+    background: #f1f1f1;
+}
 
-        .nav-bar .sub-dropdown:hover .sub-dropdown-content {
-            display: block;
-        }
+.nav-bar .sub-dropdown:hover .sub-dropdown-content {
+    display: block;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
-        .details-container {
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
-            padding: 20px;
-            text-align: left;
-            font-family: 'Roboto', sans-serif;
-        }
+.details-container {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    text-align: left;
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden; /* Add this to prevent content overflow */
+}
 
-        .details-container h3 {
-            margin-bottom: 20px;
-            font-size: 2rem;
-            color: #333;
-            font-weight: 700;
-        }
+.details-container h3 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #333;
+    font-weight: 700;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
 
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
 
-        th {
-            background: #4CAF50;
-            color: white;
-            font-weight: 700;
-        }
+th {
+    background: #4CAF50;
+    color: white;
+    font-weight: 700;
+}
 
-        tr:nth-child(even) {
-            background: #f9f9f9;
-        }
+tr:nth-child(even) {
+    background: #f9f9f9;
+}
 
-        tr:hover {
-            background: #f1f1f1;
-        }
+tr:hover {
+    background: #f1f1f1;
+}
 
-        img {
-            border-radius: 5px;
-            transition: transform 0.3s;
-        }
+img {
+    border-radius: 5px;
+    transition: transform 0.3s;
+    max-width: 100%;
+    height: auto;
+}
 
-        img:hover {
-            transform: scale(1.05);
-        }
+img:hover {
+    transform: scale(1.05);
+}
 
-        /* Responsive adjustments */
-        @media (max-width: 1024px) {
-            .nav-bar .dropbtn {
-                padding: 10px;
-                font-size: 14px;
-            }
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-bar .dropdown-content,
+    .nav-bar .sub-dropdown-content {
+        position: static;
+        box-shadow: none;
+        display: none;
+    }
 
-            .nav-bar .dropdown-content {
-                min-width: 140px;
-            }
+    .nav-bar .dropdown:hover .dropdown-content,
+    .nav-bar .sub-dropdown:hover .sub-dropdown-content {
+        display: block;
+    }
 
-            .nav-bar .sub-dropdown-content {
-                min-width: 140px;
-            }
+    .nav-bar .dropbtn {
+        width: 100%;
+        font-size: 25px;
+    }
 
-            .container {
-                padding: 15px;
-            }
+    .container {
+        padding: 10px;
+    }
 
-            .details-container {
-                padding: 15px;
-            }
-        }
+    .details-container {
+        padding: 10px;
+    }
 
-        @media (max-width: 768px) {
-            .nav-bar .dropdown-content,
-            .nav-bar .sub-dropdown-content {
-                position: static;
-                box-shadow: none;
-                display: none;
-            }
+    table {
+        font-size: 0.9rem;
+    }
 
-            .nav-bar .dropdown:hover .dropdown-content,
-            .nav-bar .sub-dropdown:hover .sub-dropdown-content {
-                display: block;
-            }
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
 
-            .nav-bar .dropbtn {
-                width: 100%;
-                font-size: 25px;
-            }
+@media (max-width: 480px) {
+    .nav-bar .dropbtn {
+        font-size: 15px;
+        padding: 8px;
+    }
 
-            .container {
-                padding: 10px;
-            }
+    .details-container {
+        padding: 8px;
+    }
 
-            .details-container {
-                padding: 10px;
-            }
+    table {
+        font-size: 0.8rem;
+    }
 
-            table {
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-bar .dropbtn {
-                font-size: 25px;
-                padding: 8px;
-            }
-
-            .details-container {
-                padding: 8px;
-            }
-
-            table {
-                font-size: 0.8rem;
-            }
-
-            img {
-                height: 80px;
-                width: 80px;
-            }
-        }
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
 
         /* Marquee effect using CSS animations */
         .marquee {
@@ -500,21 +488,28 @@ $(document).ready(function() {
     </div>
     <div class="nav-bar">
         <div class="dropdown">
-            <button class="dropbtn"><b>Menu</b></button>
-            <div class="dropdown-content">
-                <a href="#" onclick="fetchOwnerDetails()">Owner Details</a>
-                <a href="#" onclick="fetchSponsorDetails()">Sponsor Details</a>
-                <div class="sub-dropdown">
-                    <a href="#">Player Details</a>
-                    <div class="sub-dropdown-content">
-                        <a href="#">All</a>
-                        <a href="#">Bowler</a>
-                        <a href="#">Batsman</a>
-                        <a href="#">All Rounder</a>
+            <button class="dropbtn" onclick="fetchOwnerDetails()">Owners</button>
+        </div>
+        <div class="dropdown">
+        
+                <div class="dropdown">
+                    <button class="dropbtn">Players</button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="fetchPlayerDetails('All')">All</a>
+                        <a href="#" onclick="fetchPlayerDetails('Batsman')">Batsman</a>
+                        <a href="#" onclick="fetchPlayerDetails('Bowler')">Bowler</a>
+                        <a href="#" onclick="fetchPlayerDetails('All Rounder')">All Rounder</a>
+                    
                     </div>
                 </div>
-                <a href="#about" onclick="showAboutUs()">About Tournament</a>
-            </div>
+               
+            
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="fetchSponsorDetails()">Sponsors</button>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="showAboutUs()">About</button>
         </div>
     </div>
     <div class="container">
@@ -574,7 +569,7 @@ $(document).ready(function() {
 
         .dropbtn .bar {
             display: block;
-            width: 25px;
+            width: 15px;
             height: 3px;
             margin: 5px 0;
             background-color: white;
