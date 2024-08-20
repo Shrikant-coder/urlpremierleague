@@ -452,72 +452,94 @@ function fetchSponsorDetails() {
         hideLoader(); // Hide loader if there's an error
     });
 }
+// Function to fetch and display Group A owner details
+function fetchGroupAOwnerDetails() {
+    showLoader(); // Show loader when fetching data
+    $.get("/owner/owners/groupA", function(data) {  // Assuming the endpoint for Group A owners is '/owner/groupAowners'
+        $("#details-container").show();
+        $("#about-us-container").hide();
+        $("#details-container").empty();
+        $("#details-container").append("<h3>Group A Owner Details</h3>");
+        var tableHtml = "<table><thead><tr><th>Name</th><th>Captain</th><th>Owner Photo</th><th>Captain Photo</th></tr></thead><tbody>";
+        data.forEach(function(owner) {
+            var ownerImageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
+            var captainImageSrc = owner.captain.image ? "data:image/png;base64," + owner.captain.image : "";
+            tableHtml += "<tr><td>" + owner.name + "</td><td>" + owner.captain.name + "</td><td><img src='" + ownerImageSrc + "' height='100' width='100' onclick='openModal(\"" + ownerImageSrc + "\")'></td><td><img src='" + captainImageSrc + "' height='100' width='100' onclick='openModal(\"" + captainImageSrc + "\")'></td></tr>";
+        });
+        tableHtml += "</tbody></table>";
+        $("#details-container").append(tableHtml);
+        hideLoader(); // Hide loader after fetching data
+    }).fail(function() {
+        alert("Error fetching Group A owner details.");
+        hideLoader(); // Hide loader if there's an error
+    });
+}
 
+// Function to fetch and display Group B owner details
+function fetchGroupBOwnerDetails() {
+    showLoader(); // Show loader when fetching data
+    $.get("/owner/owners/groupB", function(data) {  // Assuming the endpoint for Group B owners is '/owner/groupBowners'
+        $("#details-container").show();
+        $("#about-us-container").hide();
+        $("#details-container").empty();
+        $("#details-container").append("<h3>Group B Owner Details</h3>");
+        var tableHtml = "<table><thead><tr><th>Name</th><th>Captain</th><th>Owner Photo</th><th>Captain Photo</th></tr></thead><tbody>";
+        data.forEach(function(owner) {
+            var ownerImageSrc = owner.image ? "data:image/png;base64," + owner.image : "";
+            var captainImageSrc = owner.captain.image ? "data:image/png;base64," + owner.captain.image : "";
+            tableHtml += "<tr><td>" + owner.name + "</td><td>" + owner.captain.name + "</td><td><img src='" + ownerImageSrc + "' height='100' width='100' onclick='openModal(\"" + ownerImageSrc + "\")'></td><td><img src='" + captainImageSrc + "' height='100' width='100' onclick='openModal(\"" + captainImageSrc + "\")'></td></tr>";
+        });
+        tableHtml += "</tbody></table>";
+        $("#details-container").append(tableHtml);
+        hideLoader(); // Hide loader after fetching data
+    }).fail(function() {
+        alert("Error fetching Group B owner details.");
+        hideLoader(); // Hide loader if there's an error
+    });
+}
 $(document).ready(function() {
-    // Load sponsor details by default
+    // Bind event handlers to buttons and links
+    $("#groupA-link").on("click", function(event) {
+        event.preventDefault();
+        fetchGroupAOwnerDetails(); // Fetch Group A owners
+    });
+
+    $("#groupB-link").on("click", function(event) {
+        event.preventDefault();
+        fetchGroupBOwnerDetails(); // Fetch Group B owners
+    });
+
+    $(".dropdown-content a").on("click", function(event) {
+        event.preventDefault();
+        const role = $(this).text();
+        if (role === "Group A") {
+            fetchGroupAOwnerDetails();
+        } else if (role === "Group B") {
+            fetchGroupBOwnerDetails();
+        } else {
+            $("#details-container").hide();
+            $("#about-us-container").show();
+        }
+    });
+
+    $(".dropbtn").on("click", function(event) {
+        event.preventDefault();
+        toggleDropdown(this);
+    });
+
+    // Fetch sponsor details by default on page load
     fetchSponsorDetails();
-
-    // Function to show dropdown menu and fetch player details
-    $(".sub-dropdown-content a").on("click", function() {
-        var role = $(this).text();
-        fetchPlayerDetails(role);
-    });
-
-    // Function to show About Us section
-    $(".dropdown-content a[href='#about']").on("click", function() {
-        $("#details-container").hide();
-        $("#about-us-container").show();
-    });
 });
-$(document).ready(function() {
-    // Function to toggle dropdown visibility
-    function toggleDropdown(element) {
-    var dropdownContent = $(element).siblings('.dropdown-content');
-    var isVisible = dropdownContent.is(':visible');
+
+function toggleDropdown(element) {
+    const dropdownContent = $(element).siblings('.dropdown-content');
+    const isVisible = dropdownContent.is(':visible');
     $('.dropdown-content').hide();
     if (!isVisible) {
         dropdownContent.show();
     }
+   
 }
-
-    // Toggle dropdown on button click
-    $(".dropbtn").on("click", function(event) {
-        event.stopPropagation(); // Prevent click from propagating to document
-        toggleDropdown(this);
-    });
-
-    // Close dropdowns when clicking outside
-    $(document).on("click", function(event) {
-        if (!$(event.target).closest('.dropdown').length) {
-            $('.dropdown-content').hide();
-        }
-    });
-
-    // Prevent closing main dropdown when clicking on items with sub-dropdowns
-    $(".dropdown-content > a").on("click", function(event) {
-        var subDropdown = $(this).siblings('.sub-dropdown-content');
-        if (subDropdown.length > 0) {
-            event.stopPropagation(); // Prevent closing
-        } else {
-            $('.dropdown-content').hide(); // Close dropdown if no sub-dropdown
-        }
-    });
-
-    // Close main dropdown when clicking on sub-dropdown items
-    $(".sub-dropdown-content a").on("click", function(event) {
-        $('.dropdown-content').hide(); // Close main dropdown
-    });
-
-    // Prevent closing of sub-dropdown when clicking inside
-    $(".sub-dropdown-content").on("click", function(event) {
-        event.stopPropagation(); // Prevent closing of parent dropdown
-    });
-});
-
-
-$(document).ready(function() {
-    console.log("jQuery is working!");
-});
     </script>
 </head>
 <body>
@@ -525,9 +547,6 @@ $(document).ready(function() {
         <div class="spinner"></div>
     </div>
     <div id="overlay"></div>
-<div id="loader">
-    <div class="spinner"></div>
-</div>
     <div class="banner">
         <header style="background-color: #4CAF50; color: white; padding: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
             <h1 style="margin: 0; font-size: 2.5em;">URUL PREMIER LEAGUE</h1>
@@ -538,8 +557,6 @@ $(document).ready(function() {
         <div class="dropdown">
             <button class="dropbtn" onclick="fetchOwnerDetails()">Owners</button>
         </div>
-       
-        
         <div class="dropdown">
             <button class="dropbtn">Players</button>
             <div class="dropdown-content">
@@ -549,14 +566,18 @@ $(document).ready(function() {
                 <a href="#" onclick="fetchPlayerDetails('All Rounder')">All Rounder</a>
             </div>
         </div>
-               
-            
         <div class="dropdown">
             <button class="dropbtn" onclick="fetchSponsorDetails()">Sponsors</button>
         </div>
         <div class="dropdown">
-            <button class="dropbtn" onclick="showAboutUs()">About</button>
+            <button class="dropbtn">About</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="showAboutUs()">About Tournament</a>
+                <a href="#" onclick="fetchGroupAOwnerDetails()">Group A</a>
+                <a href="#" onclick="fetchGroupBOwnerDetails()">Group B</a>
+            </div>
         </div>
+        
     </div>
     <div id="image-modal" class="modal">
         <span class="close">&times;</span>
@@ -570,18 +591,22 @@ $(document).ready(function() {
         <div class="details-container" id="details-container">
             <!-- Details will be fetched and displayed here -->
         </div>
-        <div id="about-us-container">
+        <div id="about-us-container" style="display:none;">
             <h3>About Tournament</h3>
+            <p><b>Rules</b> - लीगमधील मॅचेस ६ (२,२,१,१) ओव्हर्सच्या असतील, ज्यात २ ओव्हर्स बॅटिंग पॉवरप्ले असतील (फक्त २ खेळाडू ३० यार्ड्सच्या बाहेर ठेवता येतील) आणि उरलेले ४ ओव्हर्स बॉलिंग पॉवरप्ले असतील (या वेळेस फक्त ५ खेळाडू ३० यार्ड्सच्या बाहेर असतील). </p>
+            <p>फायनल मॅच ८ (२,२,२,२) ओव्हर्सची असेल , ज्यात ३ ओव्हर्स बॅटिंग पॉवरप्ले असतील आणि उरलेले ५ ओव्हर्स बॉलिंग पॉवरप्ले असतील </p>
+            <p>ग्राउंडच्या दोन्ही बाजूला ५:४ खेळाडू खेळले जातील, अन्यथा नो बॉल मानला जाईल.</p>
+            <p><b>Matches</b> - सर्व मॅचेस लीगच्या पद्धतीने खेळवण्यात येतील. प्रत्येक संघ आपल्या गटातील इतर संघांसोबत लीग मॅचेस खेळतील. 
+            </p><p>प्रत्येक मॅचसाठी २ पॉइंट्स दिले जातील. प्रत्येक गटातील टॉप २ संघ सेमीफायनलसाठी पात्र ठरतील. </p>
+             <p>जर लीगमधील काही संघांचे पॉइंट्स समान असतील, तर ज्या संघाचे सर्वात जास्त "सिक्स" आहेत त्यास प्राधान्य दिले जाईल. "सिक्स" देखील समान असल्यास, "फोर"च्या गणनेला प्राधान्य दिले जाईल.</p>
+             <p> सेमीफायनल्समध्ये गट A आणि गट B मधील प्रत्येक गटातील २-२ संघामध्ये मॅचेस खेळवली जातील. </p>
+
             <p><b>Owner</b> - Owner होण्यासाठी आपल्याला UPL समितीकडे 5000 जमा करावे लागतील (प्रथम 8 टीम्स नोंदविल्या जातील, त्यापेक्षा जास्त टीम्स घेतल्या जाणार नाहीत.) आणि इथे लिस्टेड असलेल्या खेळाडूंपैकी आपल्याला खेळाडू निवडावे लागतील. लीगसाठी आपण कोणत्याही खेळाडूसाठी इच्छा दाखवू शकता आणि त्यासाठी आपल्याला काही पॉइंट्स खर्च करावे लागतील. आपल्या कडे एकूण 500 पॉइंट्स असतील, त्यातून आपल्याला 12 खेळाडू निवडावे लागतील. आपल्याला कॅप्टन निवडण्याची मुभा असेल आणि त्यासाठी आपल्याला कोणतीच बोली लावावी लागणार नाही. Owner प्लेइंग 11 मध्ये सुद्धा खेळू शकतो.प्रत्येक टीममध्ये कमीत कमी १ खेळाडू थॉमसे किंवा मोरेवाडीचा, १ खेळाडू उरुल किंवा शिवाजीनगरचा, १ खेळाडू पांडवनगरचा, आणि १ खेळाडू गाणेवाडीचा असणे आवश्यक आहे.</p>
             <p><b>Player</b> - आपल्याला UPL मध्ये भाग घेण्यासाठी पहिल्यांदा फॉर्म भरावा लागेल. UPL समिती फॉर्म प्रदान करेल आणि प्रत्येक फॉर्मची फी 100 रुपये असेल. आपली निवड जो कोणी Owner करेल त्या टीममध्ये आपल्याला प्रामाणिकपणे खेळावे लागेल 
                 <b>जर आपली निवड कोणत्याच टीममध्ये झाली नसेल तर फॉर्म फी परत केली जाणार नाही, याची खेळाडूने नोंद घ्यावी</b>. आपल्याला प्रत्येक मॅचमध्ये मॅन ऑफ द मॅच मिळेल आणि सोबत मेडल देखील मिळेल आणि आपला खेळ दाखवण्याची संधी मिळेल. अधिक माहितीसाठी UPL समितीशी संपर्क साधा.</p>
         </div>
     </div>
-    <script>
-        function showAboutUs() {
-            document.getElementById("about-us-container").style.display = "block";
-            document.getElementById("details-container").style.display = "none";
-        }
-    </script>
+
 </body>
+
 </html>
