@@ -150,6 +150,7 @@
         img:hover {
             transform: scale(1.05);
         }
+        
 /* Responsive adjustments */
 @media (max-width: 768px) {
             .nav-bar .dropdown-content {
@@ -384,29 +385,45 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-// Function to fetch and display player details based on role
-function fetchPlayerDetails(role) {
-    showLoader(); // Show loader when fetching data
-    $.get("/player/players", function(data) {
-        $("#details-container").show();
-        $("#about-us-container").hide();
-        $("#details-container").empty();
-        $("#details-container").append("<h3>Player Details (" + role + ")</h3>");
-        var tableHtml = "<table><thead><tr><th>Name</th><th>Role</th><th>Village</th><th>Photo</th></tr></thead><tbody>";
-        data.forEach(function(player) {
-            if (player.role === role || role === "All") { // Filter by selected role or show all
-                var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
-                tableHtml += "<tr><td>" + player.name + "</td><td>" + player.role + "</td><td>" + player.village + "</td><td><img src='" + imageSrc + "' height='100' width='100' onclick='openModal(\"" + imageSrc + "\")'></td></tr>";
+function filterPlayers() {
+        // Get the value of the search input
+        var searchTerm = $("#player-search").val().toLowerCase();
+        
+        // Filter rows based on the search term
+        $("#details-container table tbody tr").each(function() {
+            var rowText = $(this).text().toLowerCase();
+            if (rowText.indexOf(searchTerm) > -1) {
+                $(this).show();
+            } else {
+                $(this).hide();
             }
         });
-        tableHtml += "</tbody></table>";
-        $("#details-container").append(tableHtml);
-        hideLoader(); // Hide loader after fetching data
-    }).fail(function() {
-        alert("Error fetching player details.");
-        hideLoader(); // Hide loader if there's an error
-    });
-}
+    }
+    
+    // Modified fetchPlayerDetails function to include the search input
+    function fetchPlayerDetails(role) {
+        showLoader(); // Show loader when fetching data
+        $.get("/player/players", function(data) {
+            $("#details-container").show();
+            $("#about-us-container").hide();
+            $("#details-container").empty();
+            $("#details-container").append('<input type="text" id="player-search" placeholder="Search players..." onkeyup="filterPlayers()">');
+            $("#details-container").append("<h3>Player Details (" + role + ")</h3>");
+            var tableHtml = "<table><thead><tr><th>Name</th><th>Role</th><th>Village</th><th>Photo</th></tr></thead><tbody>";
+            data.forEach(function(player) {
+                if (player.role === role || role === "All") { // Filter by selected role or show all
+                    var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
+                    tableHtml += "<tr><td>" + player.name + "</td><td>" + player.role + "</td><td>" + player.village + "</td><td><img src='" + imageSrc + "' height='100' width='100' onclick='openModal(\"" + imageSrc + "\")'></td></tr>";
+                }
+            });
+            tableHtml += "</tbody></table>";
+            $("#details-container").append(tableHtml);
+            hideLoader(); // Hide loader after fetching data
+        }).fail(function() {
+            alert("Error fetching player details.");
+            hideLoader(); // Hide loader if there's an error
+        });
+    }
 
 // Function to fetch and display owner details
 function fetchOwnerDetails() {
@@ -589,6 +606,10 @@ function toggleDropdown(element) {
             <span>Important Updates: खेळाडूंचा लिलाव १३ ऑक्टोबर २०२४ ला श्री जगदंबा हायस्कूल उरुल येथे ठीक १०:०० वाजता सुरू होईल. तरी सर्व टीम मालक आणि कॅप्टन यांनी उपस्थित राहावे ही विनंती. तसेच, लिलावाचे लाईव्ह चित्रिकरण आपणाला इथे पाहता येईल.</span>
         </div>
         <div class="details-container" id="details-container">
+            <div class="search-box-container">
+                <input type="text" id="search-box" placeholder="Search players..." onkeyup="searchPlayers()">
+            </div>
+
             <!-- Details will be fetched and displayed here -->
         </div>
         <div id="about-us-container" style="display:none;">
