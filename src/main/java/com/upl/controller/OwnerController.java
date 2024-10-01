@@ -32,7 +32,6 @@ public class OwnerController {
 	@GetMapping("/owners/groupA")
 	public ResponseEntity<List<Owner>> getAllOwnersA() {
 		List<Owner> owners = ownerService.findAll();
-		 List<Integer> filterIds = List.of(5, 10, 11, 12);
 		return ResponseEntity.ok(owners.stream()
 	            .filter(owner -> owner.getId() == 5 || owner.getId() == 10 || owner.getId() == 11 || owner.getId() == 12)
 	            .collect(Collectors.toList()));
@@ -41,9 +40,8 @@ public class OwnerController {
 	@GetMapping("/owners/groupB")
 	public ResponseEntity<List<Owner>> getAllOwnersB() {
 		List<Owner> owners = ownerService.findAll();
-		 List<Integer> filterIds = List.of(5, 10, 11, 12);
 		return ResponseEntity.ok(owners.stream()
-	            .filter(owner -> owner.getId() == 6 || owner.getId() == 7 || owner.getId() == 8 || owner.getId() == 13)
+	            .filter(owner -> owner.getId() == 6 || owner.getId() == 7 || owner.getId() == 14 || owner.getId() == 13)
 	            .collect(Collectors.toList()));
 	}
 }
