@@ -619,8 +619,8 @@ function toggleDropdown(element) {
             <span>Important Updates: खेळाडूंचा लिलाव १३ ऑक्टोबर २०२४ ला श्री जगदंबा हायस्कूल उरुल येथे ठीक १०:०० वाजता सुरू होईल. तरी सर्व टीम मालक आणि कॅप्टन यांनी उपस्थित राहावे ही विनंती. तसेच, लिलावाचे लाईव्ह चित्रिकरण आपणाला इथे पाहता येईल.</span>
         </div>
         <div class="live-auction-container" style="text-align: center; margin: 20px 0;">
-            <a href="https://us05web.zoom.us/j/85965650239?pwd=DqXwKf6kfabrjzRDPvOmOFGrfYRcyY.1" target="_blank" style="padding: 10px 20px; background-color: #4CAF50; color: rgb(29, 10, 242); text-decoration: none; border-radius: 5px; font-size: 1.2em;">
-                <span class="blink" style="font-weight: bold;">LIVE लिलाव पाहण्यासाठी येथे क्लिक करा</span>
+            <a href="https://us05web.zoom.us/j/85965650239?pwd=DqXwKf6kfabrjzRDPvOmOFGrfYRcyY.1" target="_blank" style="padding: 10px 20px; background-color: #4CAF50; color: rgb(29, 10, 242); text-decoration: none; border-radius: 5px; font-size: 1em;">
+                <span class="blink" style="font-weight: bold;">Live लिलाव पाहण्यासाठी येथे क्लिक करा</span>
             </a>
         </div>
         
