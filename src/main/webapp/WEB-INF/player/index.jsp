@@ -210,32 +210,34 @@
 
         /* Marquee effect using CSS animations */
         .marquee {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            background: #343a40;
-            color: #fff;
-            padding: 10px;
-            font-size: 1.2em;
-            font-weight: 700;
-            position: relative;
-            box-sizing: border-box;
-        }
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    background: #343a40;
+    color: #fff;
+    padding: 10px;
+    font-size: 1.2em;
+    font-weight: 700;
+    position: relative;
+    box-sizing: border-box;
+}
 
-        .marquee span {
-            display: inline-block;
-            padding-left: 100%;
-            animation: marquee 70s linear infinite;
-        }
+.marquee span {
+    display: inline-block;
+    padding-left: 100%; /* This can remain as is */
+    animation: marquee 20s linear infinite; /* Shorten the duration to make it faster */
+    /* You can also adjust the animation delay if needed */
+}
 
-        @keyframes marquee {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
+      /* Add keyframes to adjust the starting position */
+@keyframes marquee {
+    0% {
+        transform: translateX(0); /* Start from the right edge */
+    }
+    100% {
+        transform: translateX(-100%); /* End at the left edge */
+    }
+}
 
         /* About Us Section */
         #about-us-container {
@@ -341,7 +343,18 @@
     text-decoration: none;
     cursor: pointer;
 }
+.blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+}
 
+@keyframes blink-animation {
+    0%, 100% {
+        visibility: visible;
+    }
+    50% {
+        visibility: hidden;
+    }
+}
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -605,6 +618,12 @@ function toggleDropdown(element) {
         <div class="marquee">
             <span>Important Updates: खेळाडूंचा लिलाव १३ ऑक्टोबर २०२४ ला श्री जगदंबा हायस्कूल उरुल येथे ठीक १०:०० वाजता सुरू होईल. तरी सर्व टीम मालक आणि कॅप्टन यांनी उपस्थित राहावे ही विनंती. तसेच, लिलावाचे लाईव्ह चित्रिकरण आपणाला इथे पाहता येईल.</span>
         </div>
+        <div class="live-auction-container" style="text-align: center; margin: 20px 0;">
+            <a href="https://us05web.zoom.us/j/85965650239?pwd=DqXwKf6kfabrjzRDPvOmOFGrfYRcyY.1" target="_blank" style="padding: 10px 20px; background-color: #4CAF50; color: rgb(29, 10, 242); text-decoration: none; border-radius: 5px; font-size: 1.2em;">
+                <span class="blink" style="font-weight: bold;">LIVE लिलाव पाहण्यासाठी येथे क्लिक करा</span>
+            </a>
+        </div>
+        
         <div class="details-container" id="details-container">
             <div class="search-box-container">
                 <input type="text" id="search-box" placeholder="Search players..." onkeyup="searchPlayers()">
