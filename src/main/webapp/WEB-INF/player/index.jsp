@@ -570,6 +570,210 @@ function toggleDropdown(element) {
     }
    
 }
+function groupBLots() {
+    showLoader(); // Show loader when fetching data
+
+    $.get("/owner/owners/groupB", function(data) {
+        $("#details-container").show();
+        $("#about-us-container").hide();
+        $("#details-container").empty();
+        $("#details-container").append("<h3>Group B Matches</h3>");
+
+        // Check if data has enough elements for matches
+        if (data.length < 4) {
+            $("#details-container").append("<p>Not enough data for matches.</p>");
+            hideLoader(); // Hide loader if not enough data
+            return;
+        }
+
+        // Declare variables for each owner
+        var nir = data[0];
+        var ran = data[1];
+        var san = data[2];
+        var sun = data[3];
+
+        // Define all possible matches
+        var allMatches = [
+            [sun, ran], // Match 1: Owner1 vs Owner2
+            [san, nir], // Match 2: Owner3 vs Owner4
+            [sun, san], // Match 3: Owner1 vs Owner3
+            [ran, nir], // Match 4: Owner2 vs Owner4
+            [sun, nir], // Match 5: Owner1 vs Owner4
+            [ran, san]  // Match 6: Owner2 vs Owner3
+           
+        ];
+
+        var scheduledMatches = [];
+        var lastPlayed = {};
+
+        // Schedule matches ensuring no consecutive games
+        for (var match of allMatches) {
+            var [owner1, owner2] = match;
+
+            // Check if neither owner played in the last match
+            if (lastPlayed[owner1.name] !== owner2.name && lastPlayed[owner2.name] !== owner1.name) {
+                scheduledMatches.push(match);
+                lastPlayed[owner1.name] = owner2.name; // Update last played
+                lastPlayed[owner2.name] = owner1.name; // Update last played
+            }
+        }
+
+        // Build HTML for the scheduled matches
+        var tableHtml = "<table><thead><tr><th>Owner 1</th><th>Image</th><th>VS</th><th>Image</th><th>Owner 2</th></tr></thead><tbody>";
+
+        scheduledMatches.forEach(function(match) {
+            var [owner1, owner2] = match;
+
+            // Use old logic for images
+            var owner1ImageSrc = owner1.image ? "data:image/png;base64," + owner1.image : "https://via.placeholder.com/100";
+            var owner2ImageSrc = owner2.image ? "data:image/png;base64," + owner2.image : "https://via.placeholder.com/100";
+
+            // Build table row using concatenation
+            tableHtml += "<tr>" +
+                "<td>" + owner1.name + "</td>" +
+                "<td><img src='" + owner1ImageSrc + "' height='100' width='100' onclick='openModal(\"" + owner1ImageSrc + "\")' style='cursor: pointer;'></td>" +
+                "<td>VS</td>" +
+                "<td><img src='" + owner2ImageSrc + "' height='100' width='100' onclick='openModal(\"" + owner2ImageSrc + "\")' style='cursor: pointer;'></td>" +
+                "<td>" + owner2.name + "</td>" +
+                "</tr>";
+        });
+
+        tableHtml += "</tbody></table>";
+        $("#details-container").append(tableHtml);
+        hideLoader(); // Hide loader after fetching data
+    }).fail(function() {
+        alert("Error fetching Group A owner details.");
+        hideLoader(); // Hide loader if there's an error
+    });
+}
+function groupALots() {
+    showLoader(); // Show loader when fetching data
+
+    $.get("/owner/owners/groupA", function(data) {
+        $("#details-container").show();
+        $("#about-us-container").hide();
+        $("#details-container").empty();
+        $("#details-container").append("<h3>Group A Matches</h3>");
+
+        // Check if data has enough elements for matches
+        if (data.length < 4) {
+            $("#details-container").append("<p>Not enough data for matches.</p>");
+            hideLoader(); // Hide loader if not enough data
+            return;
+        }
+
+        // Declare variables for each owner
+        var nir = data[0];
+        var ran = data[1];
+        var san = data[2];
+        var sun = data[3];
+
+        // Define all possible matches
+        var allMatches = [
+            [nir, ran], // Match 1: Owner1 vs Owner2
+            [san, sun], // Match 2: Owner3 vs Owner4
+            [nir, san], // Match 3: Owner1 vs Owner3
+            [ran, sun], // Match 4: Owner2 vs Owner4
+            [nir, sun], // Match 5: Owner1 vs Owner4
+            [ran, san]  // Match 6: Owner2 vs Owner3
+           
+        ];
+
+        var scheduledMatches = [];
+        var lastPlayed = {};
+
+        // Schedule matches ensuring no consecutive games
+        for (var match of allMatches) {
+            var [owner1, owner2] = match;
+
+            // Check if neither owner played in the last match
+            if (lastPlayed[owner1.name] !== owner2.name && lastPlayed[owner2.name] !== owner1.name) {
+                scheduledMatches.push(match);
+                lastPlayed[owner1.name] = owner2.name; // Update last played
+                lastPlayed[owner2.name] = owner1.name; // Update last played
+            }
+        }
+
+        // Build HTML for the scheduled matches
+        var tableHtml = "<table><thead><tr><th>Owner 1</th><th>Image</th><th>VS</th><th>Image</th><th>Owner 2</th></tr></thead><tbody>";
+
+        scheduledMatches.forEach(function(match) {
+            var [owner1, owner2] = match;
+
+            // Use old logic for images
+            var owner1ImageSrc = owner1.image ? "data:image/png;base64," + owner1.image : "https://via.placeholder.com/100";
+            var owner2ImageSrc = owner2.image ? "data:image/png;base64," + owner2.image : "https://via.placeholder.com/100";
+
+            // Build table row using concatenation
+            tableHtml += "<tr>" +
+                "<td>" + owner1.name + "</td>" +
+                "<td><img src='" + owner1ImageSrc + "' height='100' width='100' onclick='openModal(\"" + owner1ImageSrc + "\")' style='cursor: pointer;'></td>" +
+                "<td>VS</td>" +
+                "<td><img src='" + owner2ImageSrc + "' height='100' width='100' onclick='openModal(\"" + owner2ImageSrc + "\")' style='cursor: pointer;'></td>" +
+                "<td>" + owner2.name + "</td>" +
+                "</tr>";
+        });
+
+        tableHtml += "</tbody></table>";
+        $("#details-container").append(tableHtml);
+        hideLoader(); // Hide loader after fetching data
+    }).fail(function() {
+        alert("Error fetching Group A owner details.");
+        hideLoader(); // Hide loader if there's an error
+    });
+}
+function fetchPlayersByOwner(ownerName) {
+    showLoader(); // Show loader when fetching data
+
+    // Create the endpoint using the owner name
+    var endpoint = "/owner/players/" + encodeURIComponent(ownerName); // Use ownerName as a path variable
+
+    $.get(endpoint, function(data) {
+        $("#details-container").show();
+        $("#about-us-container").hide();
+        $("#details-container").empty();
+        $("#details-container").append("<h3>Players for " + ownerName + "</h3>");
+
+        // Check if data is empty
+        if (!data || Object.keys(data).length === 0) {
+            $("#details-container").append("<p>No players found for " + ownerName + ".</p>");
+            hideLoader(); // Hide loader if no data
+            return;
+        }
+
+        // Build HTML for the players list
+        var tableHtml = "<table><thead><tr><th>S.No</th><th>Name</th><th>Role</th></tr></thead><tbody>";
+
+        // Initialize a counter for serial number
+        let srNo = 1;
+
+        // Iterate through the map
+        for (var playerName in data) {
+            if (data.hasOwnProperty(playerName)) {
+                var playerRole = data[playerName]; // Get role
+                // Build table row using concatenation
+                tableHtml += "<tr>" +
+                    "<td>" + srNo++ + "</td>" + // Serial number
+                    "<td>" + playerName + "</td>" + // Player's name
+                    "<td>" + playerRole + "</td>" + // Player's role
+                    "</tr>";
+            }
+        }
+
+        tableHtml += "</tbody></table>";
+        $("#details-container").append(tableHtml);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+        console.error("Error fetching players:", textStatus, errorThrown);
+        console.error("Response Text:", jqXHR.responseText); // Log the response text
+        alert("Error fetching players for " + ownerName + ".");
+    })
+    .always(function() {
+        hideLoader(); // Hide loader after fetching data (whether success or failure)
+    });
+}
+
+
     </script>
 </head>
 <body>
@@ -605,6 +809,14 @@ function toggleDropdown(element) {
                 <a href="#" onclick="showAboutUs()">About Tournament</a>
                 <a href="#" onclick="fetchGroupAOwnerDetails()">Group A</a>
                 <a href="#" onclick="fetchGroupBOwnerDetails()">Group B</a>
+                <a href="#" onclick="fetchPlayersByOwner('NiranjanDongale')">Niranjan D</a>
+                <a href="#" onclick="fetchPlayersByOwner('RanjeetShilwant')">Ranjeet S</a>
+                <a href="#" onclick="fetchPlayersByOwner('SantoshDeshmukh')">Santosh D</a>
+                <a href="#" onclick="fetchPlayersByOwner('SunilPawar')">Sunil P</a>
+                <a href="#" onclick="fetchPlayersByOwner('PankajMokashi')">Pankaj M</a>
+                <a href="#" onclick="fetchPlayersByOwner('SantoshLohar')">Santosh L</a>
+                <a href="#" onclick="fetchPlayersByOwner('HarshwardhanNikam')">Harshwardhan N</a>
+                <a href="#" onclick="fetchPlayersByOwner('AniketKadam')">Aniket K</a>
             </div>
         </div>
         
@@ -615,12 +827,13 @@ function toggleDropdown(element) {
         <div id="caption"></div>
     </div>
     <div class="container">
-        <div class="marquee">
-            <span>Important Updates: खेळाडूंचा लिलाव १३ ऑक्टोबर २०२४ ला श्री जगदंबा हायस्कूल उरुल येथे ठीक १०:०० वाजता सुरू होईल. तरी सर्व टीम मालक आणि कॅप्टन यांनी उपस्थित राहावे ही विनंती. तसेच, लिलावाचे लाईव्ह चित्रिकरण आपणाला इथे पाहता येईल.</span>
-        </div>
-        <div class="live-auction-container" style="text-align: center; margin: 20px 0;">
-            <a href="https://us05web.zoom.us/j/85965650239?pwd=DqXwKf6kfabrjzRDPvOmOFGrfYRcyY.1" target="_blank" style="padding: 10px 20px; background-color: #4CAF50; color: rgb(29, 10, 242); text-decoration: none; border-radius: 5px; font-size: 1em;">
-                <span class="blink" style="font-weight: bold;">Live लिलाव पाहण्यासाठी येथे क्लिक करा</span>
+       
+        <div class="live-auction-container" style="display: flex; justify-content: center; margin: 20px 0;">
+            <a href="#" onclick="groupALots()" style="padding: 10px 20px; background-color: #4CAF50; color: rgb(29, 10, 242); text-decoration: none; border-radius: 5px; font-size: 1em; margin-right: 10px;">
+                <span class="blink" style="font-weight: bold;">Group A Lots</span>
+            </a>
+            <a href="#" onclick="groupBLots()" style="padding: 10px 20px; background-color: #4CAF50; color: rgb(29, 10, 242); text-decoration: none; border-radius: 5px; font-size: 1em; margin-right: 10px;">
+                <span class="blink" style="font-weight: bold;">Group B Lots</span>
             </a>
         </div>
         
