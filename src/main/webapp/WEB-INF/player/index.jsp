@@ -528,17 +528,25 @@ function fetchGroupBOwnerDetails() {
     });
 }
 $(document).ready(function() {
-    // Bind event handlers to buttons and links
-    $("#groupA-link").on("click", function(event) {
+    // Show sponsor details by default on page load
+    fetchSponsorDetails();
+    $("#details-container").hide(); // Hide details container initially
+    $("#about-us-container").hide(); // Hide about us container initially
+
+    // Bind event handlers to dropdown functionality
+    $(".dropbtn").on("click", function(event) {
         event.preventDefault();
-        fetchGroupAOwnerDetails(); // Fetch Group A owners
+        toggleDropdown(this);
     });
 
-    $("#groupB-link").on("click", function(event) {
-        event.preventDefault();
-        fetchGroupBOwnerDetails(); // Fetch Group B owners
+    // Close dropdowns if clicked outside
+    $(document).on("click", function(event) {
+        if (!$(event.target).closest('.dropdown').length) {
+            $(".dropdown-content").hide();
+        }
     });
 
+    // Bind event handlers to dropdown links
     $(".dropdown-content a").on("click", function(event) {
         event.preventDefault();
         const role = $(this).text();
@@ -550,26 +558,24 @@ $(document).ready(function() {
             $("#details-container").hide();
             $("#about-us-container").show();
         }
+        // Close the dropdown after selection
+        $(".dropdown-content").hide();
     });
-
-    $(".dropbtn").on("click", function(event) {
-        event.preventDefault();
-        toggleDropdown(this);
-    });
-
-    // Fetch sponsor details by default on page load
-    fetchSponsorDetails();
 });
+
 
 function toggleDropdown(element) {
     const dropdownContent = $(element).siblings('.dropdown-content');
-    const isVisible = dropdownContent.is(':visible');
+    
+    // Hide all dropdowns first
     $('.dropdown-content').hide();
-    if (!isVisible) {
+
+    // Show the current dropdown only if it was not already visible
+    if (!dropdownContent.is(':visible')) {
         dropdownContent.show();
     }
-   
 }
+
 function groupBLots() {
     showLoader(); // Show loader when fetching data
 

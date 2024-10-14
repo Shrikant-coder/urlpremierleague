@@ -90,6 +90,18 @@ public class OwnerController {
 	        case "SunilPawar":
 	            players.put("Akshay Desai-Captain", "All Rounder");
 	            players.put("Karan Desai", "Bowler");
+	            players.put("Jaywant Surve", "Batsman");
+	            players.put("Sahil Surve", "Batsman");
+	            players.put("Manohar Desai", "All Rounder");
+	            players.put("Raju Surve", "Batsman");
+	            players.put("Nilesh Chavan", "All Rounder");
+	            players.put("Suhas Desai", "Batsman");
+	            players.put("Akshay Desai", "All Rounder");
+	            players.put("Raj Desai", "Batsman");
+	            players.put("Niranjan Desai", "Batsman");
+	            players.put("Sourabh Katkar", "Batsman");
+	            players.put("Ajay Mane", "All Rounder");
+	            players.put("Anil Kadam", "Batsman");
 	            break;
 	        case "PankajMokashi":
 	        	 players.put("Shrikant Surve-Captain", "All Rounder");
