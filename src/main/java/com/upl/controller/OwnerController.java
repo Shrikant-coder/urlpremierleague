@@ -86,7 +86,7 @@ public class OwnerController {
 		            players.put("Vishal Nikam", "All Rounder");
 		            players.put("Mahesh Desai", "Batsman");
 		            players.put("Nitish Desai", "Batsman");
-		            players.put("Vaibhav Pawar", "Batsman");
+		          
 	            break;
 	        case "SunilPawar":
 	            players.put("Akshay Desai-Captain", "All Rounder");
@@ -152,6 +152,7 @@ public class OwnerController {
 		            players.put("Uday Nikam", "Batsman");
 		            players.put("Sujeet Mokashi", "All Rounder");
 		            players.put("Vinu Nikam", "Batsman");
+		            players.put("Vaibhav Pawar", "Batsman");
 		           
 	            break;
 	        case "AniketKadam":
