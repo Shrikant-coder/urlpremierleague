@@ -120,6 +120,7 @@ public class OwnerController {
 		            players.put("Bapu More", "Batsman");
 		            players.put("Rahul Bhise", "Batsman");
 		            players.put("Shreyash Nikam", "Batsman");
+		            players.put("Pranit Mokashi", "Batsman");
 	            break;
 	        case "SantoshLohar":
 	        	 players.put("Ananda Salunkhe-Captain", "All Rounder");
