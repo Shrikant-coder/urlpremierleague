@@ -575,7 +575,6 @@ function toggleDropdown(element) {
         dropdownContent.show();
     }
 }
-
 function groupBLots() {
     showLoader(); // Show loader when fetching data
 
@@ -606,11 +605,11 @@ function groupBLots() {
             [ran, nir], // Match 4: Owner2 vs Owner4
             [sun, nir], // Match 5: Owner1 vs Owner4
             [ran, san]  // Match 6: Owner2 vs Owner3
-           
         ];
 
         var scheduledMatches = [];
         var lastPlayed = {};
+        var matchStartTime = new Date('2023-11-01T10:30:00'); // Starting time for matches
 
         // Schedule matches ensuring no consecutive games
         for (var match of allMatches) {
@@ -618,9 +617,12 @@ function groupBLots() {
 
             // Check if neither owner played in the last match
             if (lastPlayed[owner1.name] !== owner2.name && lastPlayed[owner2.name] !== owner1.name) {
-                scheduledMatches.push(match);
+                scheduledMatches.push({ owners: match, time: matchStartTime.toLocaleString() });
                 lastPlayed[owner1.name] = owner2.name; // Update last played
                 lastPlayed[owner2.name] = owner1.name; // Update last played
+
+                // Increment match start time by 1 hour for the next match
+                matchStartTime.setHours(matchStartTime.getHours() + 1.5);
             }
         }
 
@@ -628,7 +630,7 @@ function groupBLots() {
         var tableHtml = "<table><thead><tr><th>Owner 1</th><th>Image</th><th>VS</th><th>Image</th><th>Owner 2</th></tr></thead><tbody>";
 
         scheduledMatches.forEach(function(match) {
-            var [owner1, owner2] = match;
+            var [owner1, owner2] = match.owners;
 
             // Use old logic for images
             var owner1ImageSrc = owner1.image ? "data:image/png;base64," + owner1.image : "https://via.placeholder.com/100";
@@ -636,6 +638,8 @@ function groupBLots() {
 
             // Build table row using concatenation
             tableHtml += "<tr>" +
+                "<td colspan='5' style='text-align: center;'>" + match.time + "</td>" + // Display match time
+                "</tr><tr>" +
                 "<td>" + owner1.name + "</td>" +
                 "<td><img src='" + owner1ImageSrc + "' height='100' width='100' onclick='openModal(\"" + owner1ImageSrc + "\")' style='cursor: pointer;'></td>" +
                 "<td>VS</td>" +
@@ -681,12 +685,12 @@ function groupALots() {
             [nir, san], // Match 3: Owner1 vs Owner3
             [ran, sun], // Match 4: Owner2 vs Owner4
             [nir, sun], // Match 5: Owner1 vs Owner4
-            [ran, san]  // Match 6: Owner2 vs Owner3
-           
+            [ran, san]   // Match 6: Owner2 vs Owner3
         ];
 
         var scheduledMatches = [];
         var lastPlayed = {};
+        var matchStartTime = new Date('2023-10-31T10:30:00'); // Starting time for matches
 
         // Schedule matches ensuring no consecutive games
         for (var match of allMatches) {
@@ -694,9 +698,12 @@ function groupALots() {
 
             // Check if neither owner played in the last match
             if (lastPlayed[owner1.name] !== owner2.name && lastPlayed[owner2.name] !== owner1.name) {
-                scheduledMatches.push(match);
+                scheduledMatches.push({ owners: match, time: matchStartTime.toLocaleString() });
                 lastPlayed[owner1.name] = owner2.name; // Update last played
                 lastPlayed[owner2.name] = owner1.name; // Update last played
+
+                // Increment match start time by 1 hour for the next match
+                matchStartTime.setHours(matchStartTime.getHours() + 1.5);
             }
         }
 
@@ -704,7 +711,7 @@ function groupALots() {
         var tableHtml = "<table><thead><tr><th>Owner 1</th><th>Image</th><th>VS</th><th>Image</th><th>Owner 2</th></tr></thead><tbody>";
 
         scheduledMatches.forEach(function(match) {
-            var [owner1, owner2] = match;
+            var [owner1, owner2] = match.owners;
 
             // Use old logic for images
             var owner1ImageSrc = owner1.image ? "data:image/png;base64," + owner1.image : "https://via.placeholder.com/100";
@@ -712,6 +719,8 @@ function groupALots() {
 
             // Build table row using concatenation
             tableHtml += "<tr>" +
+                "<td colspan='5' style='text-align: center;'>" + match.time + "</td>" + // Display match time
+                "</tr><tr>" +
                 "<td>" + owner1.name + "</td>" +
                 "<td><img src='" + owner1ImageSrc + "' height='100' width='100' onclick='openModal(\"" + owner1ImageSrc + "\")' style='cursor: pointer;'></td>" +
                 "<td>VS</td>" +
