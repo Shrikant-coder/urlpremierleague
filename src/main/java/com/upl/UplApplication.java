@@ -1,4 +1,4 @@
-package com.upl;
+                             package com.upl;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
 public class UplApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
-		SpringApplication.run(UplApplication.class, args);
-	}
+        SpringApplication.run(UplApplication.class, args);
+    }
 
 }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     

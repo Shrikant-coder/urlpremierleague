@@ -91,6 +91,7 @@
             fetchOwners();
             fetchSponsors();
             populateOwnerAndPlayerDropdowns();
+              $("#players-container").hide();
         });
 
         function fetchPlayers() {
@@ -104,7 +105,8 @@
                             "<div class='data-list'><p>Name: " + player.name + ", Role: " + player.role + 
                             ", Village: " + player.village + 
                             "<img src='" + imageSrc + "' alt='Player Image'></p>" +
-                            "<button onclick='deletePlayer(" + player.id + ")'>Delete</button></div>"
+                            "<button onclick='deletePlayer(" + player.id + ")'>Delete</button></div>" +
+                            "<button onclick='deletePlayer(" + player.id + ")'>Add2025</button></div>"
                         );
                     });
                 })
@@ -235,6 +237,21 @@
                 });
             }
         }
+         function addPlayer2025(playerId) {
+            if (confirm("Are you sure you want to add this player to 2025?")) {
+                $.ajax({
+                    type: "GET",
+                    url: "/admin/addPlayer2025/" + playerId,
+                    success: function(response) {
+                        alert(response);
+                        fetchPlayers();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error adding player:", error);
+                    }
+                });
+            }
+        }
 
         function deleteOwner(ownerId) {
             if (confirm("Are you sure you want to delete this owner?")) {
@@ -309,6 +326,72 @@
                 });
         }
     </script>
+    <script>
+    $(document).ready(function() {
+        
+
+        $("#players-year").on("change", function() {
+            var year = $(this).val();
+             $("#players-container").empty();
+            if (year === "2024") {
+                $("#players-container").show();
+                fetchPlayers2024();
+            } else if (year === "2025") {
+                $("#players-container").show();
+                fetchPlayers2025();
+            } else {
+                $("#players-container").hide();
+            }
+        });
+    });
+
+    function fetchPlayers2024() {
+        $.get("/admin/players2024")
+            .done(function(data) {
+                renderPlayers2024(data); 
+            })
+            .fail(function(err) {
+                console.error("Error fetching 2024 players:", err);
+            });
+    }
+
+    function fetchPlayers2025() {
+        $.get("/admin/players")
+            .done(function(data) {
+                renderPlayers(data);
+            })
+            .fail(function(err) {
+                console.error("Error fetching 2025 players:", err);
+            });
+    }
+
+    function renderPlayers2024(data) {
+        $("#players-container").empty().append("<h3>Players 2024</h3>");
+        data.forEach(function(player) {
+            var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
+            $("#players-container").append(
+                "<div class='data-list'><p>Name: " + player.name + ", Role: " + player.role +
+                ", Village: " + player.village +
+                "<img src='" + imageSrc + "' alt='Player Image'></p>" +
+                "<button onclick='deletePlayer(" + player.id + ")'>Delete</button>" +
+                "<button onclick='addPlayer2025(" + player.id + ")'>Add2025</button></div>"
+            );
+        });
+    }
+
+    function renderPlayers(data) {
+        $("#players-container").empty().append("<h3>Players 2025</h3>");
+        data.forEach(function(player) {
+            var imageSrc = player.image ? "data:image/png;base64," + player.image : "";
+            $("#players-container").append(
+                "<div class='data-list'><p>Name: " + player.name + ", Role: " + player.role +
+                ", Village: " + player.village +
+                "<img src='" + imageSrc + "' alt='Player Image'></p>" +
+                "<button onclick='deletePlayer(" + player.id + ")'>Delete</button></div>"
+            );
+        });
+    }
+</script>
 </head>
 <body>
     <div class="header">
@@ -341,7 +424,19 @@
                 <button onclick="addPlayer()">Add Player</button>
             </div>
         </div>
-        <div id="players-container" class="section"></div>
+       <div class="section">
+    <h3>View Players</h3>
+    <div class="form-group">
+        <label for="players-year">Select Year</label>
+        <select id="players-year" name="players-year">
+            <option value="">-- Select --</option>
+            <option value="2024">Players 2024</option>
+            <option value="2025">Players 2025</option>
+        </select>
+    </div>
+</div>
+
+<div id="players-container" class="section"></div>
         <div class="section">
             <h3>Add Owner</h3>
             <div class="form-group">

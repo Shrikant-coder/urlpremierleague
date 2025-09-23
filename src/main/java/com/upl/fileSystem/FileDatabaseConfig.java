@@ -10,6 +10,7 @@ public class FileDatabaseConfig {
     private String ownerFilePath;
     private String playerFilePath;
     private String sponsorFilePath;
+    private String player2024FilePath;
 
     // Getters and Setters
     public String getOwnerFilePath() {
@@ -35,4 +36,13 @@ public class FileDatabaseConfig {
     public void setSponsorFilePath(String sponsorFilePath) {
         this.sponsorFilePath = sponsorFilePath;
     }
+
+	public String getPlayer2024FilePath() {
+		return player2024FilePath;
+	}
+
+	public void setPlayer2024FilePath(String player2024FilePath) {
+		this.player2024FilePath = player2024FilePath;
+	}
+    
 }

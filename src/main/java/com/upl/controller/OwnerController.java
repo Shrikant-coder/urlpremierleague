@@ -27,12 +27,7 @@ public class OwnerController {
 	@Autowired
 	private OwnerRepository ownerService;
 
-
-	/*
-	 * @GetMapping("/niranjan") public ResponseEntity<Map<String, String>>
-	 * getPlayersNiranjan() { Map<String, String> players = new HashMap<>();
-	 * players.put("Player A", "Batsman"); return ResponseEntity.ok(players); }
-	 */
+	 
 	@GetMapping("/players/{owner}")
 	public ResponseEntity<Map<String, String>> getPlayersByOwner(@PathVariable String owner) {
 	    Map<String, String> players = new HashMap<>();

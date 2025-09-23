@@ -1,9 +1,11 @@
 package com.upl.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import com.upl.model.Owner;
 import com.upl.model.Player;
 import com.upl.model.Sponsor;
 import com.upl.repository.OwnerRepository;
+import com.upl.repository.Player2024Repository;
 import com.upl.repository.PlayerRepository;
 import com.upl.repository.SponsorRepository;
 
@@ -25,12 +28,14 @@ public class AdminController {
 
 	 private final OwnerRepository ownerRepository;
 	    private final PlayerRepository playerRepository;
+	    private final Player2024Repository player2024Repository;
 	    private final SponsorRepository sponsorRepository;
 
-	    public AdminController(OwnerRepository ownerRepository, PlayerRepository playerRepository, SponsorRepository sponsorRepository) {
+	    public AdminController(OwnerRepository ownerRepository, PlayerRepository playerRepository, SponsorRepository sponsorRepository,Player2024Repository player2024Repository) {
 	        this.ownerRepository = ownerRepository;
 	        this.playerRepository = playerRepository;
 	        this.sponsorRepository = sponsorRepository;
+	        this.player2024Repository = player2024Repository;
 	    }
     
     @PostMapping("/addPlayer")
@@ -104,6 +109,18 @@ public class AdminController {
         playerRepository.deleteById((long) id);
         return ResponseEntity.ok("Player deleted successfully!");
     }
+    @GetMapping("/addPlayer2025/{id}")
+    public ResponseEntity<String> addPlayer2025(@PathVariable int id) {
+    	Optional<Player> p=player2024Repository.findAll().stream().filter(player -> Objects.equals(player.getId(), (long) id))
+    	        .findFirst();
+        if(p.isEmpty())
+        	return ResponseEntity.ok("Player added failed");
+        else {
+        	playerRepository.save(p.get());
+        	player2024Repository.deleteById(id);
+        	return ResponseEntity.ok("Player added successfully");
+        }
+    }
 
     @DeleteMapping("/deleteOwner/{id}")
     public ResponseEntity<String> deleteOwner(@PathVariable int id) {
@@ -117,11 +134,39 @@ public class AdminController {
         return ResponseEntity.ok("Sponsor deleted successfully!");
     }
 
+    @GetMapping("/players2024")
+    public List<Player> players2024() {
+    	List<Player> all=player2024Repository.findAll();
+        return all;
+    }
+    
+    @GetMapping("/dummy")
+    public String players20242() {
+    	List<Player> plall=new ArrayList<>();
+    	Player p=new Player();
+    	p.setName("Shrikant");
+    	plall.add(p);
+    	playerRepository.saveAll(plall);
+    	List<Owner> olist=new ArrayList<>();
+    	Owner o=new Owner();
+    	o.setName("Shrikant");
+    	olist.add(o);
+    	ownerRepository.saveAll(olist);
+   
+    	List<Sponsor> slall=new ArrayList<>();
+    	Sponsor s=new Sponsor();
+    	s.setName("Shrikant");
+    	
+    	slall.add(s);
+    	sponsorRepository.saveAll(slall);
+        return "ok";
+    }
+    
     @GetMapping("/players")
     public List<Player> getPlayers() {
-        return playerRepository.findAll();
+    	List<Player> all=playerRepository.findAll();
+        return all;
     }
-
     @GetMapping("/owners")
     public List<Owner> getOwners() {
         return ownerRepository.findAll();

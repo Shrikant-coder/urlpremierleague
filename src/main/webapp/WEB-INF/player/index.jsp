@@ -799,7 +799,7 @@ function fetchPlayersByOwner(ownerName) {
     <div class="banner">
         <header style="background-color: #4CAF50; color: white; padding: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
             <h1 style="margin: 0; font-size: 2.5em;">URUL PREMIER LEAGUE</h1>
-            <p style="margin: 10px 0 0; font-size: 1.2em;">Welcome to URUL PREMIER LEAGUE</p>
+            <p style="margin: 10px 0 0; font-size: 1.2em;">Welcome to URUL PREMIER LEAGUE Parv-2</p>
         </header>
     </div>
     <div class="nav-bar">
@@ -822,16 +822,7 @@ function fetchPlayersByOwner(ownerName) {
             <button class="dropbtn">About</button>
             <div class="dropdown-content">
                 <a href="#" onclick="showAboutUs()">About Tournament</a>
-                <a href="#" onclick="fetchGroupAOwnerDetails()">Group A</a>
-                <a href="#" onclick="fetchGroupBOwnerDetails()">Group B</a>
-                <a href="#" onclick="fetchPlayersByOwner('NiranjanDongale')">Niranjan D</a>
-                <a href="#" onclick="fetchPlayersByOwner('RanjeetShilwant')">Ranjeet S</a>
-                <a href="#" onclick="fetchPlayersByOwner('SantoshDeshmukh')">Santosh D</a>
-                <a href="#" onclick="fetchPlayersByOwner('SunilPawar')">Sunil P</a>
-                <a href="#" onclick="fetchPlayersByOwner('PankajMokashi')">Pankaj M</a>
-                <a href="#" onclick="fetchPlayersByOwner('SantoshLohar')">Santosh L</a>
-                <a href="#" onclick="fetchPlayersByOwner('HarshwardhanNikam')">Harshwardhan N</a>
-                <a href="#" onclick="fetchPlayersByOwner('AniketKadam')">Aniket K</a>
+               
             </div>
         </div>
         
@@ -842,15 +833,6 @@ function fetchPlayersByOwner(ownerName) {
         <div id="caption"></div>
     </div>
     <div class="container">
-       
-        <div class="live-auction-container" style="display: flex; justify-content: center; margin: 20px 0;">
-            <a href="#" onclick="groupALots()" style="padding: 10px 20px; background-color: #4CAF50; color: rgb(29, 10, 242); text-decoration: none; border-radius: 5px; font-size: 1em; margin-right: 10px;">
-                <span class="blink" style="font-weight: bold;">Group A Lots</span>
-            </a>
-            <a href="#" onclick="groupBLots()" style="padding: 10px 20px; background-color: #4CAF50; color: rgb(29, 10, 242); text-decoration: none; border-radius: 5px; font-size: 1em; margin-right: 10px;">
-                <span class="blink" style="font-weight: bold;">Group B Lots</span>
-            </a>
-        </div>
         
         <div class="details-container" id="details-container">
             <div class="search-box-container">
