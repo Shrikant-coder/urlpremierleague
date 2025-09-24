@@ -245,6 +245,15 @@
                     success: function(response) {
                         alert(response);
                         fetchPlayers();
+                       
+                        var year = $("#players-year").val();
+
+                       
+                        if (year === "2024") {
+                            fetchPlayers2024();
+                        } else if (year === "2025") {
+                            fetchPlayers2025();
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error("Error adding player:", error);
