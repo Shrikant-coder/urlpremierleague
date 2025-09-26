@@ -30,7 +30,7 @@
         }
 
         .nav-bar {
-    background: #4CAF50;
+    background: #d6591a;
     color: white;
     padding: 10px;
     display: flex;
@@ -127,7 +127,7 @@
         }
 
         th {
-            background: #4CAF50;
+            background: #d6591a;
             color: white;
             font-weight: 700;
         }
@@ -797,9 +797,9 @@ function fetchPlayersByOwner(ownerName) {
     </div>
     <div id="overlay"></div>
     <div class="banner">
-        <header style="background-color: #4CAF50; color: white; padding: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <header style="background-color: #d6591a; color: white; padding: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
             <h1 style="margin: 0; font-size: 2.5em;">URUL PREMIER LEAGUE</h1>
-            <p style="margin: 10px 0 0; font-size: 1.2em;">Welcome to URUL PREMIER LEAGUE Parv-2</p>
+            <p style="margin: 10px 0 0; font-size: 1.2em;">सौजन्य : राजे प्रतिष्ठान,उरुल ( पर्व - २ )</p>
         </header>
     </div>
     <div class="nav-bar">
