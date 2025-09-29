@@ -799,7 +799,7 @@ function fetchPlayersByOwner(ownerName) {
     <div class="banner">
         <header style="background-color: #FF9933; color: white; padding: 20px 0; font-family: Arial, sans-serif; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
             <h1 style="margin: 0; font-size: 2.5em;">URUL PREMIER LEAGUE</h1>
-            <p style="margin: 10px 0 0; font-size: 1.2em;">सौजन्य : राजे प्रतिष्ठान,उरुल ( पर्व - २)</p>
+            <p style="margin: 10px 0 0; font-size: 1.2em;">सौजन्य : ॥राजे प्रतिष्ठान॥,उरुल ( पर्व - २)</p>
         </header>
     </div>
     <div class="nav-bar">
