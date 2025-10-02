@@ -592,8 +592,8 @@ function groupBLots() {
         }
 
         // Declare variables for each owner
-        var nir = data[0];
-        var ran = data[1];
+        var ran = data[0];
+        var nir = data[1];
         var san = data[2];
         var sun = data[3];
 
@@ -609,7 +609,7 @@ function groupBLots() {
 
         var scheduledMatches = [];
         var lastPlayed = {};
-        var matchStartTime = new Date('2023-11-01T10:30:00'); // Starting time for matches
+        var matchStartTime = new Date('2025-10-20T10:30:00'); // Starting time for matches
 
         // Schedule matches ensuring no consecutive games
         for (var match of allMatches) {
@@ -690,7 +690,7 @@ function groupALots() {
 
         var scheduledMatches = [];
         var lastPlayed = {};
-        var matchStartTime = new Date('2023-10-31T10:30:00'); // Starting time for matches
+        var matchStartTime = new Date('2025-10-19T10:30:00'); // Starting time for matches
 
         // Schedule matches ensuring no consecutive games
         for (var match of allMatches) {
@@ -822,22 +822,39 @@ function fetchPlayersByOwner(ownerName) {
             <button class="dropbtn">About</button>
             <div class="dropdown-content">
                 <a href="#" onclick="showAboutUs()">About Tournament</a>
+                 <a href="#" onclick="fetchGroupAOwnerDetails()">Group A</a>
+                                <a href="#" onclick="fetchGroupBOwnerDetails()">Group B</a>
+                                <a href="#" onclick="fetchPlayersByOwner('Aniket')">Aniket Kadam</a>
+                                <a href="#" onclick="fetchPlayersByOwner('Pankaj')">Pankaj Mokashi</a>
+                                <a href="#" onclick="fetchPlayersByOwner('Dada')">Dada Mane</a>
+                                <a href="#" onclick="fetchPlayersByOwner('Yogesh')">Yogesh Salunkhe</a>
+                                <a href="#" onclick="fetchPlayersByOwner('Sanket')">Sanket Mane</a>
+                                <a href="#" onclick="fetchPlayersByOwner('Akash')">Akash Desai</a>
+                                <a href="#" onclick="fetchPlayersByOwner('Mahesh')">Mahesh Desai</a>
+                                <a href="#" onclick="fetchPlayersByOwner('Kumar')">Kumar Pawar</a>
                
             </div>
+
         </div>
-        
-    </div>
-    <div id="image-modal" class="modal">
-        <span class="close">&times;</span>
-        <img class="modal-content" id="modal-image">
-        <div id="caption"></div>
-    </div>
+       </div>
+
     <div class="container">
-        
+
+
+        <div class="live-auction-container" style="display: flex; justify-content: center; margin: 20px 0;">
+            <a href="#" onclick="groupALots()" style="padding: 10px 20px; background-color: #4CAF50; color: rgb(29, 10, 242); text-decoration: none; border-radius: 5px; font-size: 1em; margin-right: 10px;">
+                <span class="blink" style="font-weight: bold;">Group A Lots</span>
+            </a>
+            <a href="#" onclick="groupBLots()" style="padding: 10px 20px; background-color: #4CAF50; color: rgb(29, 10, 242); text-decoration: none; border-radius: 5px; font-size: 1em; margin-right: 10px;">
+                <span class="blink" style="font-weight: bold;">Group B Lots</span>
+            </a>
+        </div>
+
         <div class="details-container" id="details-container">
             <div class="search-box-container">
                 <input type="text" id="search-box" placeholder="Search players..." onkeyup="searchPlayers()">
             </div>
+
 
             <!-- Details will be fetched and displayed here -->
         </div>
