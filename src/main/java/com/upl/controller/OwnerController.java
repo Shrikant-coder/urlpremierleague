@@ -62,7 +62,7 @@ public class OwnerController {
 		            players.put("Bhau Desai", "Batsman");
 		            players.put("Tejas Phadtare ", "Batsman");
 		            players.put("Pranit  Mokashi", "All Rounder");
-				    players.put("Somnath Kadam", "All Rounder");
+				    players.put("Sachin Nikam", "Batsman");
 				    players.put("Santosh Lohar", "All Rounder");
 	            break;
 	        case "Dada":
@@ -98,6 +98,7 @@ public class OwnerController {
 				players.put("Nikhil  Salunkhe", "Batsman");
 				players.put("Shreenath Desai", "Batsman");
 				players.put("Nitish Desai", "Batsman");
+				players.put("Somnath Kadam", "Batsman");
 				break;
 
 
