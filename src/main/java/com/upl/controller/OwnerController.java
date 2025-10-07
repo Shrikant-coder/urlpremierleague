@@ -64,6 +64,10 @@ public class OwnerController {
 		            players.put("Pranit  Mokashi", "All Rounder");
 				    players.put("Sachin Nikam", "Batsman");
 				    players.put("Santosh Lohar", "All Rounder");
+				    players.put("Kunal Dabhade", "Batsman");
+				    players.put("Suhas Mokashi", "All Rounder");
+				    players.put("Bapu Mokashi", "All Rounder");
+
 	            break;
 	        case "Dada":
 	        	 players.put("Rohit Mane", "All Rounder");
