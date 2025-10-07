@@ -54,7 +54,6 @@ public class OwnerController {
 	        	 players.put("Shrikant Surve", "All Rounder");
 		            players.put("Aditya Thorat", "Batsman");
 		            players.put("Vinay Desai ", "Batsman");
-		            players.put("Sumit Dongle", "All Rounder");
 		            players.put("Nilesh Mane", "Batsman");
 		            players.put("Chetan Kamble", "All Rounder");
 		            players.put("Sachin Surve", "Batsman");
@@ -63,7 +62,6 @@ public class OwnerController {
 		            players.put("Bhau Desai", "Batsman");
 		            players.put("Tejas Phadtare ", "Batsman");
 		            players.put("Pranit  Mokashi", "All Rounder");
-				    players.put("Akshay Kamble", "Batsman");
 				    players.put("Somnath Kadam", "All Rounder");
 				    players.put("Santosh Lohar", "All Rounder");
 	            break;
@@ -104,7 +102,7 @@ public class OwnerController {
 
 
 	        case "Akash":
-	            players.put(" Sameer Desai-Captain", "All Rounder");
+	            players.put("Sameer Desai-Captain", "All Rounder");
 				players.put("Aniket Kamble", "Batsman");
 				players.put("Tushar Desai", "Batsman");
 				players.put("Omkar Desai", "Batsman");
