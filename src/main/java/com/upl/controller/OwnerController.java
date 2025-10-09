@@ -157,7 +157,8 @@ public class OwnerController {
 		            players.put("Rohan Pawar", "Batsman");
 		            players.put("Sarvesh Desai", "All Rounder");
 		            players.put("Vishal Kadam", "Batsman");
-				players.put("Sahil Surve", "Batsman");
+				    players.put("Sahil Surve", "Batsman");
+				    players.put("Digvijay Desai", "Batsman");
 
 	            break;
 
