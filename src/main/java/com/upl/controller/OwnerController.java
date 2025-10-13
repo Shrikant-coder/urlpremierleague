@@ -178,6 +178,7 @@ public class OwnerController {
 				players.put("Harshad Desai", "Batsman");
 				players.put("Piyush Sapkal", "Batsman");
 				players.put("Uddesh Nikam", "Batsman");
+				players.put("Sangram Nikam", "Batsman");
 
 				break;
 	        default:
